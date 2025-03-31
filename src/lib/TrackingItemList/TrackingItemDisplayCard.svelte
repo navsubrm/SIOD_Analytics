@@ -49,7 +49,8 @@
 			<h5>{item.coreCapability}</h5>
 		</div>
 
-		<div class="card-stats card-stats-1">
+		<div class="card-stats-1">
+			<div class="card-stats">
 			<CardSmallIconItem
 				data={item?.priorityAssignments[0]?.priority}
 				Icon={Priority}
@@ -66,15 +67,21 @@
 					Icon={MaintenanceCrossedItems}
 					label={'Completion'}
 				/>
+			</div>
+			<div class="card-stats">
 				<p>Since {item?.estimates[0]?.trackingEventName}.</p>
+			</div>
 			{:else}
-				<p>No estimates entered yet.</p>
+				<div class="card-stats">
+					<p>No estimates entered yet.</p>
+				</div>
 			{/if}
 		</div>
 
 		<hr />
 
-		<div class="card-stats card-stats-2">
+		<div class="card-stats-2">
+			<div class="card-stats">
 			<CardSmallIconItem data={priorityAverage} Icon={Priority} label={'Priority'} />
 			{#if item?.estimates[0]}
 				<CardSmallIconItem data={`${confidenceAverage}%`} Icon={Shield} label={'Confidence'} />
@@ -83,14 +90,19 @@
 					Icon={MaintenanceCrossedItems}
 					label={'Completion'}
 				/>
+			</div>
+			<div class="card-stats">
 				<p>
 					Avg. Over {daysBetween} day{(daysBetween as number) > 1 ? 's' : ''}, and {eventCount} event{(eventCount as number) >
 					1
 						? 's'
 						: ''}.
 				</p>
+			</div>
 			{:else}
-				<p>No estimates entered yet.</p>
+				<div class="card-stats">
+					<p>No estimates entered yet.</p>
+				</div>
 			{/if}
 		</div>
 		<div class="card-footer">
