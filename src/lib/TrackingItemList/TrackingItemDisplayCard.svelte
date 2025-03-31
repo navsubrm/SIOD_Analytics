@@ -67,11 +67,14 @@
 					Icon={MaintenanceCrossedItems}
 					label={'Completion'}
 				/>
+			{/if}
 			</div>
-			<div class="card-stats">
-				<p>Since {item?.estimates[0]?.trackingEventName}.</p>
-			</div>
-			{:else}
+			{#if item?.estimate[0]}
+				<div class="card-stats">
+					<p>Since {item?.estimates[0]?.trackingEventName}.</p>
+				</div>
+			{/if}
+			{#if !item?.estimate[0]}
 				<div class="card-stats">
 					<p>No estimates entered yet.</p>
 				</div>
@@ -90,7 +93,9 @@
 					Icon={MaintenanceCrossedItems}
 					label={'Completion'}
 				/>
+			{/if}
 			</div>
+			{#if item?.estimates[0]}
 			<div class="card-stats">
 				<p>
 					Avg. Over {daysBetween} day{(daysBetween as number) > 1 ? 's' : ''}, and {eventCount} event{(eventCount as number) >
@@ -99,7 +104,8 @@
 						: ''}.
 				</p>
 			</div>
-			{:else}
+			{/if}
+			{#if !item?.estimates[0]}
 				<div class="card-stats">
 					<p>No estimates entered yet.</p>
 				</div>
