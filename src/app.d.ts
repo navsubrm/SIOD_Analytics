@@ -1,6 +1,46 @@
 // See https://svelte.dev/docs/kit/types#app.d.ts
 // for information about these interfaces
 declare global {
+	interface TrackingItem {
+		_id?: ObjectId;
+		name: string;
+		initialReasonId: string;
+		initialReason: string;
+		coreCapability: string;
+		finalReasonId?: string;
+		closedDate?: Date;
+		parentId?: string;
+		parentName: string;
+		priorityAssignments: TrackingItemPriority[];
+		estimates: TrackingItemEstimate[];
+		createdAt: Date;
+		updatedAt?: Date;
+	}
+
+	interface TrackingItemPriority {
+		_id: string;
+		priority: number;
+		createdAt: Date;
+	}
+
+	interface TrackingItemEstimate {
+		_id: string;
+		confidencePercentile: number;
+		completionPercentile: number;
+		trackingEventId?: string;
+		trackingEventName?: string;
+		createdAt: Date;
+	}
+
+	interface TrackingEvent {
+		_id?: ObjectId;
+		name: string;
+		startDate: string;
+		endDate: string;
+		associatedEventId?: string;
+		createdAt: Date;
+	}
+
 	namespace App {
 		// interface Error {}
 		// interface Locals {}

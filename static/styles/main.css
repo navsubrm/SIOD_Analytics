@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Literata:ital,opsz,wght@0,7..72,200..900;1,7..72,200..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+*,
+*::before,
+*::after {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	scroll-behavior: smooth;
+}
+
+.something {
+	--gold: hsl(44, 85%, 51%); /* Xanthous */
+	--blue: hsl(226, 93%, 35%); /* International Klein Blue */
+	--black: hsl(35, 18%, 13%); /* Eerie black */
+	--white: hsl(144, 16%, 94%); /* Anti-flash white */
+	--grey: hsl(170, 9%, 52%); /* Battleship gray */
+	--green: hsl(109, 63%, 34%);
+	--orange: hsl(39, 100%, 50%);
+	--red: rgb(255, 33, 33);
+}
+
+:root {
+	--gold: hsl(44, 100%, 34%); /* Xanthous */
+	--blue: hsl(262, 100%, 23%); /* International Klein Blue */
+	--black: hsl(35, 18%, 13%); /* Eerie black */
+	--white: hsl(144, 16%, 94%); /* Anti-flash white */
+	--grey: hsl(170, 9%, 52%); /* Battleship gray */
+	--green: hsl(109, 63%, 34%);
+	--red: rgb(255, 33, 33);
+	--orange: hsl(39, 100%, 50%);
+	--li-icon-color: var(--blue);
+}
+
+.dark-mode {
+	--gold: hsl(44, 85%, 51%);
+	--blue: hsl(170, 9%, 52%);
+	--black: hsl(144, 16%, 94%);
+	--white: hsl(35, 18%, 13%);
+	--grey: hsl(144, 16%, 94%);
+	--green: hsl(109, 63%, 34%);
+	--red: rgb(255, 33, 33);
+	--orange: hsl(39, 100%, 50%);
+	--li-icon-color: var(--gold);
+}
+
+* :where(h1, h2, h3) {
+	font-family: 'Lato', Arial, Helvetica, sans-serif;
+	font-size: 3em;
+	color: var(--gold);
+}
+
+* :where(h3) {
+	font-size: 2em;
+}
+
+/* Must update font on svelte select list also. */
+* :where(h4, h5, h6, a, input, li) {
+	font-family: 'Literata', serif;
+	font-size: 1em;
+	color: var(--black);
+}
+
+* :where(h4, h5) {
+	color: var(--blue);
+}
+
+* :where(h6, p) {
+	font-family: 'Literata', serif;
+	font-size: 1em;
+	line-height: 1.5;
+}
+
+* :where(li) {
+	color: var(--black);
+}
+
+.password-requirements {
+	font-size: 0.8em;
+	color: var(--grey);
+	margin-top: 0.25em;
+	margin-bottom: 1em;
+	display: block;
+}
+
+.error {
+	color: var(--red);
+	font-size: 0.9em;
+	margin-bottom: 0.5em;
+	display: block;
+}
+
+/* @media (prefers-color-scheme: dark) {
+	:root {
+		--gold: hsl(44, 85%, 51%);
+		--blue: hsl(170, 9%, 52%);
+		--black: hsl(144, 16%, 94%);
+		--white: hsl(35, 18%, 13%);
+		--grey: hsl(144, 16%, 94%);
+	}
+} */
