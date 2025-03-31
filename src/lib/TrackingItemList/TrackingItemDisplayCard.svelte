@@ -69,12 +69,12 @@
 				/>
 			{/if}
 			</div>
-			{#if item?.estimate[0]}
+			{#if item?.estimates[0]}
 				<div class="card-stats">
 					<p>Since {item?.estimates[0]?.trackingEventName}.</p>
 				</div>
 			{/if}
-			{#if !item?.estimate[0]}
+			{#if !item?.estimates[0]}
 				<div class="card-stats">
 					<p>No estimates entered yet.</p>
 				</div>
