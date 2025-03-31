@@ -75,11 +75,11 @@
 		<hr />
 
 		<div class="card-stats card-stats-2">
-			<CardSmallIconItem data={`${priorityAverage}%`} Icon={Priority} label={'Priority'} />
+			<CardSmallIconItem data={priorityAverage} Icon={Priority} label={'Priority'} />
 			{#if item?.estimates[0]}
 				<CardSmallIconItem data={`${confidenceAverage}%`} Icon={Shield} label={'Confidence'} />
 				<CardSmallIconItem
-					data={completionAverage}
+					data={`${completionAverage}%`}
 					Icon={MaintenanceCrossedItems}
 					label={'Completion'}
 				/>
