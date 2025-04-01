@@ -87,10 +87,10 @@
 	} */
 
 	.analytics {
-		display: none;
+		/* display: none; */
 		position: absolute;
-		inset: 0;
-		margin: auto;
+		/* inset: 0;
+		margin: auto; */
 		/* width: 100%;
 		max-width: 500px; */
 		padding: 1em;
@@ -114,9 +114,9 @@
 	}
 
 	.analytics:popover-open {
-		/* position: absolute;
+		position: absolute;
 		inset: 0;
-		margin: auto; */
+		margin: auto;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
