@@ -17,14 +17,11 @@ export function checkConfidenceOfTrackingItem(item: TrackingItem) {
 	//Get task completion percentage
 	const completionPercentage = item.estimates[0].completionPercentile;
 
-	console.log('Variable check: ', daysUsedPercent, completionPercentage);
-
 	//Return percent of time used and percent of task complete for comparison.
-	console.log('Final: ', daysUsedPercent - completionPercentage);
 
-	const completionReturn = truncateToDecimalPlaces(completionPercentage, 2);
-	const daysUsedReturn = truncateToDecimalPlaces(daysUsedPercent, 2);
-	const compDaysDelta = truncateToDecimalPlaces(completionReturn - daysUsedReturn, 2);
+	const completionReturn = truncateToDecimalPlaces(completionPercentage);
+	const daysUsedReturn = truncateToDecimalPlaces(daysUsedPercent);
+	const compDaysDelta = truncateToDecimalPlaces(completionReturn - daysUsedReturn);
 
 	return [completionReturn, daysUsedReturn, compDaysDelta];
 }

@@ -70,6 +70,21 @@
 		gap: 0.25em;
 	}
 
+	.data-container h3 button {
+		border: none;
+		background: none;
+	}
+
+	.data-container h3 button :global(svg) {
+		stroke: var(--gold);
+	}
+
+	.data-container h3 button:hover :global(svg) {
+		stroke: var(--orange);
+		cursor: pointer;
+		scale: 1.02;
+	}
+
 	.form-container {
 		position: fixed;
 		left: 0;

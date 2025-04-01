@@ -27,33 +27,31 @@
 
 	item?.estimates?.forEach((el: TrackingItemEstimate) => {
 		const originalDaysUsed = truncateToDecimalPlaces(
-			(getDaysBetweenDates(startDate, el.createdAt) / origDayTotal) * 100,
-			2
+			(getDaysBetweenDates(startDate, el.createdAt) / origDayTotal) * 100
 		);
 		const daysUsed = truncateToDecimalPlaces(
-			(getDaysBetweenDates(startDate, el.createdAt) / dayTotal) * 100,
-			2
+			(getDaysBetweenDates(startDate, el.createdAt) / dayTotal) * 100
 		);
-		const complete = truncateToDecimalPlaces(el.completionPercentile, 2);
-		const delta = truncateToDecimalPlaces(complete - daysUsed, 2);
+		const complete = truncateToDecimalPlaces(el.completionPercentile);
+		const delta = truncateToDecimalPlaces(complete - daysUsed);
 
 		data.push({
-			group: 'Timeline %',
+			group: '% of Time Past',
 			key: new Date(el.createdAt).toLocaleDateString(),
 			value: daysUsed
 		});
 		data.push({
-			group: 'Work %',
+			group: '% of Task Completed',
 			key: new Date(el.createdAt).toLocaleDateString(),
 			value: complete
 		});
 		data.push({
-			group: 'Original Timeline %',
+			group: 'Original % of Time Past',
 			key: new Date(el.createdAt).toLocaleDateString(),
 			value: originalDaysUsed
 		});
 		data.push({
-			group: 'Time/Completion Delta %',
+			group: 'Time/Comp Delta %',
 			key: new Date(el.createdAt).toLocaleDateString(),
 			delta: delta
 		});
@@ -81,7 +79,7 @@
 				mapsTo: 'delta',
 				title: 'Time/Completion Delta',
 				scaleType: 'linear',
-				correspondingDatasets: ['Time/Completion Delta %']
+				correspondingDatasets: ['Time/Comp Delta %']
 			}
 		},
 		curve: 'curveMonotoneX',
@@ -94,11 +92,11 @@
 		comboChartTypes: [
 			{
 				type: 'simple-bar',
-				correspondingDatasets: ['Work %']
+				correspondingDatasets: ['% of Task Completed']
 			},
 			{
 				type: 'line',
-				correspondingDatasets: ['Original Timeline %'],
+				correspondingDatasets: ['Original % of Time Past'],
 				options: {
 					points: {
 						radius: 5
@@ -107,7 +105,7 @@
 			},
 			{
 				type: 'line',
-				correspondingDatasets: ['Time/Completion Delta %'],
+				correspondingDatasets: ['Time/Comp Delta %'],
 				options: {
 					points: {
 						radius: 5
@@ -116,7 +114,7 @@
 			},
 			{
 				type: 'line',
-				correspondingDatasets: ['Timeline %'],
+				correspondingDatasets: ['% of Time Past'],
 				options: {
 					points: {
 						radius: 5
@@ -139,8 +137,22 @@
 	}
 
 	div :global(*) {
-		--cds-text-primary: white;
-		--cds-text-secondary: white;
-		--cds-layer-02: white;
+		--cds-text-primary: var(--white);
+		--cds-text-secondary: var(--white);
+		--cds-layer-02: var(--white);
+	}
+
+	div :global(.cds--cc--tooltip) {
+		--cds-layer-02: var(--blue);
+		border: solid 1px var(--white);
+		border-radius: 0.5em;
+	}
+
+	div :global(.cds--cc--tooltip .content-box),
+	div :global(.datapoint-tooltip) {
+		--cds-text-primary: var(--white);
+		--cds-text-secondary: var(--white);
+		color: var(--white);
+		padding: 0.5em;
 	}
 </style>
