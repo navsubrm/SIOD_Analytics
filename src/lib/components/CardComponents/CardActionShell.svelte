@@ -5,6 +5,7 @@
 	import Select from 'svelte-select';
 	import FormStyles from '$lib/components/forms/FormStyles.svelte';
 	import { coreCapability } from '$lib/stores/coreCapability';
+	import AddNewTrackingItemButton from '$lib/TrackingItemList/AddNewTrackingItemButton.svelte';
 
 	let itemList = $state([...$coreCapability]);
 
@@ -48,7 +49,12 @@
 
 <div class="card-inner">
 	<div class="card-header">
-		<CardHeader title={header.title} IconComponent={header.Icon} length={header.length} />
+		<CardHeader
+			title={header.title}
+			IconComponent={header.Icon}
+			length={header.length}
+			buttons={false}
+		/>
 	</div>
 
 	<div class="card-content">
@@ -93,9 +99,7 @@
 
 		<div class="new">
 			<p class="btn-text">Add</p>
-			<button class="add-new-btn big-icon" title="Add New" onclick={addNew}
-				><addNewButton.Icon /></button
-			>
+			<AddNewTrackingItemButton />
 			<p class="'btn-text">New</p>
 		</div>
 
@@ -138,9 +142,9 @@
 		box-shadow: 5px 5px 3px color-mix(in lab, var(--blue), transparent 95%);
 	}
 
-	.big-icon {
+	/* .big-icon {
 		--_height: 60px;
-	}
+	} */
 
 	.card-header {
 		grid-row: 1 / span 1;

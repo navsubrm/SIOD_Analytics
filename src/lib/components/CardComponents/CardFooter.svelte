@@ -24,8 +24,8 @@
 		.footer button {
 			padding-block: 1em;
 			padding-inline: 1.5em;
-			color: var(--blue);
-			background: color-mix(in lab, var(--gold), transparent 90%);
+			color: var(--white);
+			background: color-mix(in lab, var(--blue), transparent 30%);
 			border-radius: 0.5em;
 			border: solid 2px color-mix(in lab, var(--gold), transparent 90%);
 			box-shadow: 5px 5px 3px color-mix(in lab, var(--gold), transparent 95%);

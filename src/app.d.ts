@@ -4,6 +4,7 @@ declare global {
 	interface TrackingItem {
 		_id?: ObjectId;
 		name: string;
+		details: string;
 		initialReasonId: string;
 		initialReason: string;
 		coreCapability: string;

@@ -1,31 +1,20 @@
 <script>
 	import { truncateText } from '$lib/HelperFunctions/truncateText';
-	import AnalyticsBoard from '$lib/IconComponents/AnalyticsBoard.svelte';
-	import Edit from '$lib/IconComponents/Edit.svelte';
+	import AnalyticsPopover from '$lib/TrackingItemList/AnalyticsPopover.svelte';
+	import TrackingItemEditPopover from '$lib/TrackingItemList/TrackingItemEditPopover.svelte';
+	import ParentFilterLink from '$lib/TrackingItemList/ParentFilterLink.svelte';
 
-	let { IconComponent, title, length, editId = '', analyticsUrl = '' } = $props();
-
-	function openEditForm(e) {
-		e.preventDefault();
-		const editForm = document.querySelector(`#edit-task-item-${editId}`);
-		editForm?.showPopover();
-	}
+	let { item = undefined, IconComponent, title, length, buttons = true } = $props();
 </script>
 
 <div class="header flex-row flex-space-between">
 	<h6 class="flex-row"><IconComponent />{truncateText(title, length)}</h6>
 
 	<div class="flex-row flex-end btn-icons">
-		{#if analyticsUrl !== ''}
-			<div class="edit">
-				<a href={analyticsUrl} title="View Stats"><AnalyticsBoard /></a>
-			</div>
-		{/if}
-
-		{#if editId !== ''}
-			<div class="edit">
-				<a onclick={openEditForm} href="/edit-task?id={editId}" title="Edit Details"><Edit /></a>
-			</div>
+		{#if buttons}
+			<AnalyticsPopover {item} />
+			<TrackingItemEditPopover {item} />
+			<ParentFilterLink {item} />
 		{/if}
 	</div>
 </div>
@@ -43,7 +32,7 @@
 	}
 
 	.btn-icons {
-		--_stroke: orange;
+		--_stroke: var(--orange);
 	}
 
 	.btn-icons {
@@ -67,15 +56,5 @@
 
 	.flex-space-between {
 		justify-content: space-between;
-	}
-
-	.header .edit :global(svg) {
-		cursor: pointer;
-	}
-
-	.header .edit:hover :global(svg),
-	.header .edit:hover :global(svg path) {
-		fill: var(--white);
-		stroke: var(--white);
 	}
 </style>

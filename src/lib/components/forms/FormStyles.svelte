@@ -34,7 +34,8 @@
 			margin-bottom: 0.25em;
 		}
 
-		.basic-form input {
+		.basic-form input,
+		.basic-form textarea {
 			margin-bottom: 0.75em;
 			padding: 0.25em;
 			font-size: 1em;
@@ -42,6 +43,11 @@
 			border: none;
 			color: var(--white);
 			border-bottom: solid 1px var(--gold);
+		}
+
+		.basic-form textarea {
+			height: max-content;
+			width: 100%;
 		}
 
 		.basic-form input[type='text']:hover,

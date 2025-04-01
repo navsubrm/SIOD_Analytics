@@ -26,9 +26,11 @@
 	</button>
 </div>
 
-<button onclick={!action ? toggleFullView : action}>
-	<Information --_height={iconSize} --_fill={iconColor} />
-</button>
+{#if text.length > length}
+	<button onclick={!action ? toggleFullView : action}>
+		<Information --_height={iconSize} --_fill={iconColor} />
+	</button>
+{/if}
 
 <style>
 	button {

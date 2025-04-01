@@ -6,12 +6,8 @@
 	import Close from '$lib/IconComponents/Close.svelte';
 	import Add from '$lib/IconComponents/Add.svelte';
 	import TrackingItemList from '$lib/TrackingItemList/TrackingItemList.svelte';
-
-	//**
-	// Look at the chart package below for doing analysis:
-	//
-	// https://www.npmjs.com/package/@carbon/charts-svelte
-	// */
+	import { goto } from '$app/navigation';
+	import AnalyticsBoard from '$lib/IconComponents/AnalyticsBoard.svelte';
 
 	let menu: HTMLElement | undefined = $state();
 
@@ -21,6 +17,10 @@
 
 	function toggleMenuClosed() {
 		gsap.to(menu as HTMLElement, { x: '-100%', duration: 0.5 });
+	}
+
+	function goToAnalytics() {
+		goto('/analytics');
 	}
 </script>
 
@@ -46,7 +46,7 @@
 		<h3>
 			Active Tracking Items: <button class="add-new-item-button" onclick={toggleMenuOpen}
 				><Add --_height="30px" /></button
-			>
+			><button onclick={goToAnalytics}><AnalyticsBoard /></button>
 		</h3>
 		<TrackingItemList />
 	</div>

@@ -6,8 +6,6 @@
 
 	let { actionUrl = '?/add-tracking-item', editItem = {}, Action = undefined } = $props();
 
-	console.log(editItem);
-
 	let itemParent = $state(editItem?.parentId || null);
 
 	const reasonItems = page?.data?.reasonForUpdate.map((el: TrackingEvent) => {
@@ -27,16 +25,29 @@
 		<label for="name">Name: </label>
 		<input name="name" type="text" value={editItem?.name || null} />
 
-		<label for="initial-reason">Associated Start Event: </label>
+		{#if editItem?._id}
+			<input type="hidden" name="id" value={editItem?._id} />
+		{/if}
 
-		<div class="select-style">
-			<Select
-				showChevron
-				items={reasonItems}
-				name="initial-reason"
-				value={editItem?.initialReason || null}
-			/>
-		</div>
+		<label for="details">Details: </label>
+		<textarea
+			name="details"
+			value={editItem?.details || null}
+			placeholder={'Enter necessary details.'}
+		></textarea>
+
+		{#if !editItem?._id}
+			<label for="initial-reason">Associated Start Event: </label>
+
+			<div class="select-style">
+				<Select
+					showChevron
+					items={reasonItems}
+					name="initial-reason"
+					value={editItem?.initialReason || null}
+				/>
+			</div>
+		{/if}
 
 		<label for="core-capability">Associated Core Capability: </label>
 
@@ -49,13 +60,15 @@
 			/>
 		</div>
 
-		<label for="priority"
-			>Priority:
-			{#if editItem?.priorityAssignments?.length > 0}
-				<span class="error">Priority isn't edited. Assign a new priority with edit.</span>
-			{/if}
-		</label>
-		<input type="number" name="priority" min="1" max="1000" />
+		{#if !editItem?._id}
+			<label for="priority"
+				>Priority:
+				{#if editItem?.priorityAssignments?.length > 0}
+					<span class="error">Priority isn't edited. Assign a new priority with edit.</span>
+				{/if}
+			</label>
+			<input type="number" name="priority" min="1" max="1000" />
+		{/if}
 
 		<div>
 			<input type="checkbox" name="parent" bind:checked={itemParent} />

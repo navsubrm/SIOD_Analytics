@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { page } from '$app/state';
 	import CreateEstimateForm from '$lib/components/forms/CreateForms/CreateEstimateForm.svelte';
 	import CardHeader from '../components/CardComponents/CardHeader.svelte';
 	import CardFooter from '../components/CardComponents/CardFooter.svelte';
@@ -12,8 +11,7 @@
 	import Clipboard from '$lib/IconComponents/Clipboard.svelte';
 	import Priority from '$lib/IconComponents/Priority.svelte';
 	import Shield from '$lib/IconComponents/Shield.svelte';
-	import { goto } from '$app/navigation';
-	import TrackingItemEditPopover from './TrackingItemEditPopover.svelte';
+	import TruncatedText from '$lib/components/general/TruncatedText.svelte';
 
 	let { item, rotate } = $props();
 
@@ -21,32 +19,16 @@
 	const [confidenceAverage, completionAverage, daysBetween, eventCount] = $state(
 		getAverageEstimates(item?.estimates)
 	);
-
-	function filterByParent() {
-		page?.url?.searchParams.set('item-id', item._id);
-		goto(page.url);
-	}
-
-	function clearFilterByParent() {
-		page?.url?.searchParams.delete('item-id');
-		goto(page.url);
-	}
 </script>
 
 {#key item}
-	<TrackingItemEditPopover {item} />
 	<div class="card-inner card-front" id={item._id}>
 		<div class="card-header">
-			<CardHeader
-				title={item.name}
-				IconComponent={Clipboard}
-				length={15}
-				analyticsUrl="/analytics?id={item._id}"
-				editId={item._id}
-			/>
+			<CardHeader {item} title={item.coreCapability} IconComponent={Clipboard} length={15} />
 		</div>
 		<div class="card-category">
-			<h5>{item.coreCapability}</h5>
+			<h5><TruncatedText text={item.name} length={35} /></h5>
+			<div><TruncatedText text={item.details} length={20} /></div>
 		</div>
 
 		<div class="card-stats card-stats-1">
@@ -108,15 +90,7 @@
 {/key}
 
 {#snippet FooterParentTitle()}
-	{#if !item?.parentName && page.url.searchParams.get('item-id')}
-		<div>
-			<button onclick={clearFilterByParent}>Clear Filter</button>
-		</div>
-	{:else if !item?.parentName}
-		<div>
-			<button onclick={filterByParent}>Filter Related Items</button>
-		</div>
-	{:else}
+	{#if item?.parentName}
 		<div>
 			<div>
 				<small>Parent Item:</small>
@@ -187,6 +161,10 @@
 		font-size: 0.9em;
 		gap: 0.5em;
 		color: var(--black);
+	}
+
+	.card-stats p {
+		text-align: center;
 	}
 
 	.card-stats-1 {

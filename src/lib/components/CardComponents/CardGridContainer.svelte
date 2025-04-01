@@ -6,7 +6,7 @@
 	let { data, Card, actionCardProps } = $props();
 </script>
 
-<section out:fade={{ duration: 500 }} in:fade={{ delay: 700, duration: 500 }}>
+<section out:fade={{ duration: 250 }} in:fade={{ delay: 500, duration: 250 }}>
 	<div class="grid-container">
 		<CardActionShell {data} {...actionCardProps} />
 		{#each data as item}

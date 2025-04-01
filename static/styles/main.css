@@ -20,15 +20,17 @@
 	--red: rgb(255, 33, 33);
 }
 
+/* Background: #1A2433, Light Text: #E6E6E6, Dark bar: #118DFF, Light Bar: #A0D1FF, accent bar orange: #E66C37 */
+
 :root {
-	--gold: hsl(44, 100%, 34%); /* Xanthous */
-	--blue: hsl(262, 100%, 23%); /* International Klein Blue */
+	--gold: #118dff; /* hsl(44, 100%, 34%); /* Xanthous */
+	--blue: #1a2433; /* hsl(262, 100%, 23%); International Klein Blue */
 	--black: hsl(35, 18%, 13%); /* Eerie black */
-	--white: hsl(144, 16%, 94%); /* Anti-flash white */
+	--white: #f6f2f2; /* hsl(144, 16%, 94%); Anti-flash white */
 	--grey: hsl(170, 9%, 52%); /* Battleship gray */
 	--green: hsl(109, 63%, 34%);
 	--red: rgb(255, 33, 33);
-	--orange: hsl(39, 100%, 50%);
+	--orange: #e66c37; /* hsl(39, 100%, 50%); */
 	--li-icon-color: var(--blue);
 }
 

@@ -6,7 +6,7 @@
 
 	let { item, estimates } = $props();
 
-	console.log(`${item.name}`, estimates);
+	//console.log(`${item?.name}`, estimates);
 
 	function calculateGaugeData(estimates: TrackingItemEstimate[]) {
 		const [confidenceAvg, completionAvg] = getAverageEstimates(estimates);
@@ -37,22 +37,33 @@
 	const options = {
 		resizable: true,
 		height: '150px',
+		toolbar: { enabled: false },
 		gauge: {
 			type: 'semi',
 			status: 'danger'
 		}
 	};
 
-	const confOptions = { ...options, title: `Confidence` };
-	const compOptions = { ...options, title: `Completion` };
+	const confOptions = { ...options, color: { scale: { value: '#118dff' } }, title: `Confidence` };
+	const compOptions = { ...options, color: { scale: { value: `#1a2433` } }, title: `Completion` };
 </script>
 
 <div>
-	<h4>{item.name}</h4>
 	{#if estimates.length == 0}
 		<p>Insufficient Data to Calculate</p>
 	{:else}
-		<GaugeChart data={confData} options={confOptions} />
-		<GaugeChart data={compData} options={compOptions} />
+		<div class="flex-row">
+			<GaugeChart data={confData} options={confOptions} />
+			<GaugeChart data={compData} options={compOptions} />
+		</div>
 	{/if}
 </div>
+
+<style>
+	.flex-row {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		text-align: center;
+	}
+</style>

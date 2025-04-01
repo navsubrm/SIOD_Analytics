@@ -9,7 +9,7 @@
 	id="_x32_"
 	xmlns="http://www.w3.org/2000/svg"
 	xmlns:xlink="http://www.w3.org/1999/xlink"
-	viewBox="0 0 512 512"
+	viewBox="-35 0 555 555"
 	xml:space="preserve"
 >
 	<g>
@@ -30,9 +30,9 @@
 
 <style>
 	svg {
-		height: var(--_height, 25px);
-		width: var(--_height, 25px);
-		fill: var(--_fill, --black);
+		height: var(--_height, 30px);
+		width: var(--_height, 20px);
+		fill: var(--_fill, --blue);
 	}
 
 	svg:hover {

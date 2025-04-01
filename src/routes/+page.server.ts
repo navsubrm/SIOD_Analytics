@@ -35,6 +35,7 @@ export const actions = {
 
 		const newItem: TrackingItem = {
 			name: data.name.toString(),
+			details: data.details.toString(),
 			initialReasonId: JSON.parse(data['initial-reason'].toString()).value,
 			initialReason: JSON.parse(data['initial-reason'].toString()).label,
 			coreCapability: JSON.parse(data['core-capability'].toString()).value,
@@ -53,10 +54,27 @@ export const actions = {
 
 		return { success: true };
 	},
-	'add-estimate-data': async ({ request }) => {
+	'edit-tracking-item': async ({ request }) => {
 		const data = Object.fromEntries(await request.formData());
 
-		//console.log('Data from add: ', data);
+		const newItem: TrackingItem = {
+			_id: data.id.toString(),
+			name: data.name.toString(),
+			details: data.details.toString(),
+			coreCapability: JSON.parse(data['core-capability'].toString()).value,
+			updatedAt: new Date()
+		};
+
+		if (data?.['parent-id']) {
+			newItem.parentId = JSON.parse(data['parent-id'].toString()).value;
+			newItem.parentName = JSON.parse(data['parent-id'].toString()).label;
+		}
+		await TrackingItemModel.editTrackingItem(newItem);
+
+		return { success: true };
+	},
+	'add-estimate-data': async ({ request }) => {
+		const data = Object.fromEntries(await request.formData());
 
 		const recordId = data['tracking-item-id'].toString();
 		const trackingEvent = JSON.parse(data['event-id'].toString());
