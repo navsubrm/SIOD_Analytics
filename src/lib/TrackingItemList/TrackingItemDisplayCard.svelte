@@ -31,7 +31,8 @@
 			<div><TruncatedText text={item.details} length={20} /></div>
 		</div>
 
-		<div class="card-stats card-stats-1">
+		<div class="card-stats-1">
+			<div class="card-stats">
 			<CardSmallIconItem
 				data={item?.priorityAssignments[0]?.priority}
 				Icon={Priority}
@@ -48,31 +49,48 @@
 					Icon={MaintenanceCrossedItems}
 					label={'Completion'}
 				/>
-				<p>Since {item?.estimates[0]?.trackingEventName}.</p>
-			{:else}
-				<p>No estimates entered yet.</p>
+			{/if}
+			</div>
+			{#if item?.estimates[0]}
+				<div class="card-stats">
+					<p>Since {item?.estimates[0]?.trackingEventName}.</p>
+				</div>
+			{/if}
+			{#if !item?.estimates[0]}
+				<div class="card-stats">
+					<p>No estimates entered yet.</p>
+				</div>
 			{/if}
 		</div>
 
 		<hr />
 
-		<div class="card-stats card-stats-2">
-			<CardSmallIconItem data={`${priorityAverage}%`} Icon={Priority} label={'Priority'} />
+		<div class="card-stats-2">
+			<div class="card-stats">
+			<CardSmallIconItem data={priorityAverage} Icon={Priority} label={'Priority'} />
 			{#if item?.estimates[0]}
 				<CardSmallIconItem data={`${confidenceAverage}%`} Icon={Shield} label={'Confidence'} />
 				<CardSmallIconItem
-					data={completionAverage}
+					data={`${completionAverage}%`}
 					Icon={MaintenanceCrossedItems}
 					label={'Completion'}
 				/>
+			{/if}
+			</div>
+			{#if item?.estimates[0]}
+			<div class="card-stats">
 				<p>
 					Avg. Over {daysBetween} day{(daysBetween as number) > 1 ? 's' : ''}, and {eventCount} event{(eventCount as number) >
 					1
 						? 's'
 						: ''}.
 				</p>
-			{:else}
-				<p>No estimates entered yet.</p>
+			</div>
+			{/if}
+			{#if !item?.estimates[0]}
+				<div class="card-stats">
+					<p>No estimates entered yet.</p>
+				</div>
 			{/if}
 		</div>
 		<div class="card-footer">
