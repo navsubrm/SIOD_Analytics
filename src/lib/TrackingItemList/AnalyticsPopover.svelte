@@ -1,8 +1,9 @@
 <script lang="ts">
 	import AnalyticsBoard from '$lib/IconComponents/AnalyticsBoard.svelte';
-	import ConfCompGaugePair from '$lib/components/Analytics/ConfCompGaugePair.svelte';
+	//import ConfCompGaugePair from '$lib/components/Analytics/ConfCompGaugePair.svelte';
 	import Close from '$lib/IconComponents/Close.svelte';
 	import { getDaysBetweenDates } from '$lib/HelperFunctions/getDaysBetweenDates';
+	import SingleItemBarCompVersesDays from '$lib/components/Analytics/SingleItemBarCompVersesDays.svelte';
 
 	let analyticsPopover: HTMLElement | undefined = $state();
 	let { item } = $props();
@@ -30,15 +31,16 @@
 	{#if item?.name}
 		<h3>{item?.name}</h3>
 		<p>
-			Days Tracked: {getDaysBetweenDates(new Date(item?.createdAt), new Date())} day{getDaysBetweenDates(
-				new Date(item.createdAt),
+			Days Tracked: {getDaysBetweenDates(new Date(item?.startDate), new Date())} day{getDaysBetweenDates(
+				new Date(item.startDate),
 				new Date()
 			) > 1
 				? 's'
 				: ''}.
 		</p>
-		<p>Number of tracked entries: {item.estimates.length}</p>
-		<ConfCompGaugePair {item} estimates={item?.estimates || []} />
+		<SingleItemBarCompVersesDays {item} />
+		<!-- <p>Number of tracked entries: {item.estimates.length}</p> -->
+		<!-- <ConfCompGaugePair {item} estimates={item?.estimates || []} /> -->
 	{/if}
 </div>
 
@@ -67,7 +69,11 @@
 		width: 100%;
 		max-width: 500px;
 		padding: 1em;
-		background: var(--white);
+		background: var(--blue);
+		color: var(--white);
+		font-weight: bold;
+		border: none;
+		border-radius: 0.5em;
 	}
 
 	.analytics:popover-open {

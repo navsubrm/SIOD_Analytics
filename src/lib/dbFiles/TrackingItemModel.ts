@@ -35,6 +35,7 @@ export async function editTrackingItem(item: TrackingItem) {
 				$set: {
 					name: item.name,
 					details: item.details,
+					startDate: item.startDate,
 					coreCapability: item.coreCapability,
 					updatedAt: new Date()
 				}

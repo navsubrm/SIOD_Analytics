@@ -22,9 +22,6 @@
 		<label for="comp-percentile">Completion Percent Value: </label>
 		<input type="number" name="comp-percentile" min="0" max="100" />
 
-		<label for="conf-percentile">Confidence Percent Value: </label>
-		<input type="number" name="conf-percentile" min="0" max="100" />
-
 		<input type="submit" value="Add Est." />
 		<input type="button" onclick={rotate} value="Return" />
 	</form>

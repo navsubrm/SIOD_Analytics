@@ -60,6 +60,12 @@
 			/>
 		</div>
 
+		<label for="start-date">Start Date: </label>
+		<input type="date" name="start-date" />
+
+		<label for="projected-end-date">Projected End Date: </label>
+		<input type="date" name="projected-end-date" />
+
 		{#if !editItem?._id}
 			<label for="priority"
 				>Priority:

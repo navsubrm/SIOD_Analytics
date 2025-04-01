@@ -3,22 +3,16 @@
 	import CardHeader from '../components/CardComponents/CardHeader.svelte';
 	import CardFooter from '../components/CardComponents/CardFooter.svelte';
 	import CardSmallIconItem from '../components/CardComponents/CardSmallIconItem.svelte';
-	import { getAverageEstimates } from '$lib/HelperFunctions/getAverageOfEstimatesByItem';
-	import { getAveragePriority } from '$lib/HelperFunctions/getAveragePriority';
 
 	//Icons:
 	import MaintenanceCrossedItems from '$lib/IconComponents/MaintenanceCrossedItems.svelte';
 	import Clipboard from '$lib/IconComponents/Clipboard.svelte';
 	import Priority from '$lib/IconComponents/Priority.svelte';
-	import Shield from '$lib/IconComponents/Shield.svelte';
 	import TruncatedText from '$lib/components/general/TruncatedText.svelte';
+	import { checkConfidenceOfTrackingItem } from '$lib/HelperFunctions/checkConfidenceOfTrackingItem';
+	import Calendar from '$lib/IconComponents/Calendar.svelte';
 
 	let { item, rotate } = $props();
-
-	const priorityAverage = $state(getAveragePriority(item?.priorityAssignments));
-	const [confidenceAverage, completionAverage, daysBetween, eventCount] = $state(
-		getAverageEstimates(item?.estimates)
-	);
 </script>
 
 {#key item}
@@ -33,23 +27,23 @@
 
 		<div class="card-stats-1">
 			<div class="card-stats">
-			<CardSmallIconItem
-				data={item?.priorityAssignments[0]?.priority}
-				Icon={Priority}
-				label={'Priority'}
-			/>
-			{#if item?.estimates[0]}
 				<CardSmallIconItem
-					data={`${item?.estimates[0]?.confidencePercentile}%`}
-					Icon={Shield}
-					label={'Confidence'}
+					data={item?.priorityAssignments[0]?.priority}
+					Icon={Priority}
+					label={'Priority'}
 				/>
-				<CardSmallIconItem
-					data={`${item?.estimates[0]?.completionPercentile}%`}
-					Icon={MaintenanceCrossedItems}
-					label={'Completion'}
-				/>
-			{/if}
+				{#if item?.estimates[0]}
+					<CardSmallIconItem
+						data={`${checkConfidenceOfTrackingItem(item)[0]}%`}
+						Icon={MaintenanceCrossedItems}
+						label={'Complete'}
+					/>
+					<CardSmallIconItem
+						data={`${checkConfidenceOfTrackingItem(item)[1]}%`}
+						Icon={Calendar}
+						label={'Time Used'}
+					/>
+				{/if}
 			</div>
 			{#if item?.estimates[0]}
 				<div class="card-stats">
@@ -67,26 +61,17 @@
 
 		<div class="card-stats-2">
 			<div class="card-stats">
-			<CardSmallIconItem data={priorityAverage} Icon={Priority} label={'Priority'} />
-			{#if item?.estimates[0]}
-				<CardSmallIconItem data={`${confidenceAverage}%`} Icon={Shield} label={'Confidence'} />
-				<CardSmallIconItem
-					data={`${completionAverage}%`}
-					Icon={MaintenanceCrossedItems}
-					label={'Completion'}
-				/>
-			{/if}
+				{#if item?.estimates[0]}
+					<div>
+						<h4>
+							We are <span class:behind={checkConfidenceOfTrackingItem(item)[2] < 0}
+								>{checkConfidenceOfTrackingItem(item)[2]}%</span
+							>
+							{checkConfidenceOfTrackingItem(item)[2] < 0 ? 'behind' : 'ahead'} of schedule
+						</h4>
+					</div>
+				{/if}
 			</div>
-			{#if item?.estimates[0]}
-			<div class="card-stats">
-				<p>
-					Avg. Over {daysBetween} day{(daysBetween as number) > 1 ? 's' : ''}, and {eventCount} event{(eventCount as number) >
-					1
-						? 's'
-						: ''}.
-				</p>
-			</div>
-			{/if}
 			{#if !item?.estimates[0]}
 				<div class="card-stats">
 					<p>No estimates entered yet.</p>
@@ -121,6 +106,10 @@
 {/snippet}
 
 <style>
+	.behind {
+		color: var(--red);
+	}
+
 	.card-inner {
 		position: relative;
 		display: grid;

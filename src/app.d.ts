@@ -8,6 +8,8 @@ declare global {
 		initialReasonId: string;
 		initialReason: string;
 		coreCapability: string;
+		startDate: Date;
+		projectedEndDates: ProjectedEndDate[];
 		finalReasonId?: string;
 		closedDate?: Date;
 		parentId?: string;
@@ -16,6 +18,12 @@ declare global {
 		estimates: TrackingItemEstimate[];
 		createdAt: Date;
 		updatedAt?: Date;
+	}
+
+	interface ProjectedEndDate {
+		_id: string;
+		date: Date;
+		createdAt: Date;
 	}
 
 	interface TrackingItemPriority {

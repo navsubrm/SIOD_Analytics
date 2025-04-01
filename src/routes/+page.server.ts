@@ -39,6 +39,14 @@ export const actions = {
 			initialReasonId: JSON.parse(data['initial-reason'].toString()).value,
 			initialReason: JSON.parse(data['initial-reason'].toString()).label,
 			coreCapability: JSON.parse(data['core-capability'].toString()).value,
+			startDate: new Date(data['start-date'].toString()),
+			projectedEndDates: [
+				{
+					_id: new ObjectId().toString(),
+					date: new Date(data['projected-end-date'].toString()),
+					createdAt: new Date()
+				}
+			],
 			priorityAssignments: [
 				{ _id: new ObjectId().toString(), priority: Number(data.priority), createdAt: new Date() }
 			],
@@ -61,6 +69,7 @@ export const actions = {
 			_id: data.id.toString(),
 			name: data.name.toString(),
 			details: data.details.toString(),
+			startDate: new Date(data['start-date'].toString()),
 			coreCapability: JSON.parse(data['core-capability'].toString()).value,
 			updatedAt: new Date()
 		};
@@ -81,7 +90,6 @@ export const actions = {
 
 		const newEstimate: TrackingItemEstimate = {
 			_id: new ObjectId().toString(),
-			confidencePercentile: Number(data['conf-percentile']),
 			completionPercentile: Number(data['comp-percentile']),
 			trackingEventId: trackingEvent.value,
 			trackingEventName: trackingEvent.label,
