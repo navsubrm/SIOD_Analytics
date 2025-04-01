@@ -59,40 +59,8 @@
 		stroke: var(--white);
 	}
 
-	/* .analytics {
-		position: absolute;
-		inset: 0;
-		display: flex;
-		opacity: 0;
-		flex-direction: column;
-		justify-content: flex-start;
-		align-items: center;
-		height: 100%;
-		border: solid 1px var(--gold);
-		border-radius: 0.5em;
-		padding: 1.5em;
-		overflow-y: scroll;
-		background: color-mix(in lab, var(--blue), transparent 10%);
-		color: var(--white);
-		pointer-events: none;
-		z-index: 10000000;
-		transition:
-			opacity 0.75s,
-			display 0.75s 0.75s allow-discrete;
-	}
-
-	.full-view {
-		opacity: 1;
-		pointer-events: all;
-	} */
-
 	.analytics {
-		/* display: none; */
 		position: fixed;
-		/* inset: 0;
-		margin: auto; */
-		/* width: 100%;
-		max-width: 500px; */
 		padding: 1em;
 		background: var(--blue);
 		color: var(--white);
@@ -100,17 +68,6 @@
 		border: none;
 		border-radius: 0.5em;
 		opacity: 0;
-		/* transition:
-			opacity 0.5s,
-			display 0 0.5s allow-discrete;
-
-		@starting-style {
-			opacity: 1;
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			align-items: center;
-		} */
 	}
 
 	.analytics:popover-open {
