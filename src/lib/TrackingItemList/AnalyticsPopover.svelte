@@ -88,7 +88,7 @@
 
 	.analytics {
 		/* display: none; */
-		position: absolute;
+		position: fixed;
 		/* inset: 0;
 		margin: auto; */
 		/* width: 100%;
@@ -114,7 +114,7 @@
 	}
 
 	.analytics:popover-open {
-		position: absolute;
+		position: fixed;
 		inset: 0;
 		margin: auto;
 		display: flex;
