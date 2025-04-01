@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { truncateText } from '$lib/helperFunctions/truncateText';
+	import { truncateText } from '$lib/HelperFunctions/truncateText';
 	import Close from '$lib/IconComponents/Close.svelte';
 	import Information from '$lib/IconComponents/Information.svelte';
 
