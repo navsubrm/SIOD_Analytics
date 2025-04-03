@@ -8,8 +8,11 @@
 	import TrackingItemList from '$lib/TrackingItemList/TrackingItemList.svelte';
 	import { goto } from '$app/navigation';
 	import AnalyticsBoard from '$lib/IconComponents/AnalyticsBoard.svelte';
+	import TrackingItemTable from '$lib/components/TrackingItemTable/TrackingItemTable.svelte';
+	import Toggle from '$lib/IconComponents/Toggle.svelte';
 
 	let menu: HTMLElement | undefined = $state();
+	let viewTable: boolean = $state(true);
 
 	function toggleMenuOpen() {
 		gsap.to(menu as HTMLElement, { x: 0, duration: 0.5 });
@@ -47,9 +50,24 @@
 			Active Tracking Items: <button class="add-new-item-button" onclick={toggleMenuOpen}
 				><Add --_height="30px" /></button
 			><button onclick={goToAnalytics}><AnalyticsBoard /></button>
+			<button onclick={() => (viewTable = !viewTable)}>
+				<Toggle bind:active={viewTable} />
+			</button>
 		</h3>
-		<TrackingItemList />
 	</div>
+	{#if viewTable}
+		<TrackingItemTable trackingItems={page?.data?.trackingItems} />
+	{:else}
+		<TrackingItemList />
+		<!-- <div class="data-container">
+			<h3>
+				Active Tracking Items: <button class="add-new-item-button" onclick={toggleMenuOpen}
+					><Add --_height="30px" /></button
+				><button onclick={goToAnalytics}><AnalyticsBoard /></button>
+			</h3>
+			
+		</div> -->
+	{/if}
 </section>
 
 <style>

@@ -60,13 +60,13 @@
 	svg {
 		height: var(--_height, 25px);
 		width: var(--_height, 25px);
-		fill: var(--_fill, red);
-		stroke: var(--_stroke, blue);
+		fill: var(--_fill, var(--gold));
+		stroke: var(--_stroke, var(--blue));
 	}
 
-	#graph-line {
+	/* #graph-line {
 		stroke: var(--_graph-stroke, green);
-	}
+	} */
 
 	#horizontal-bar-long {
 		stroke: var(--_bar-stroke-long, red);

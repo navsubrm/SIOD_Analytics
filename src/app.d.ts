@@ -34,7 +34,6 @@ declare global {
 
 	interface TrackingItemEstimate {
 		_id: string;
-		confidencePercentile: number;
 		completionPercentile: number;
 		trackingEventId?: string;
 		trackingEventName?: string;

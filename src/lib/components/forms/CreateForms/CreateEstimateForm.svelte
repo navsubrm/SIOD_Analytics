@@ -12,7 +12,12 @@
 
 <FormStyles Children={CreateEstimateForm} />
 {#snippet CreateEstimateForm()}
-	<form method="POST" action="?/add-estimate-data" class="form-main">
+	<form
+		method="POST"
+		action="?/add-estimate-data"
+		class="form-main"
+		style={rotate ? 'border-radius: 0 0 0.5em 0.5em' : ''}
+	>
 		<input type="hidden" name="tracking-item-id" value={item._id} />
 		<label for="event-id">Associated Start Event: </label>
 		<span class="select-style">
@@ -23,13 +28,15 @@
 		<input type="number" name="comp-percentile" min="0" max="100" />
 
 		<input type="submit" value="Add Est." />
-		<input type="button" onclick={rotate} value="Return" />
+		{#if rotate}
+			<input type="button" onclick={rotate} value="Return" />
+		{/if}
 	</form>
 {/snippet}
 
 <style>
 	.form-main {
-		border-radius: 0 0 0.5em 0.5em;
+		border-radius: 0.5em;
 		height: 100%;
 	}
 

@@ -7,6 +7,7 @@
 	import PercentageOfItemsWAdjustedEnd from '$lib/components/Analytics/PercentageOfItemsWAdjustedEnd.svelte';
 	import PercentageOfItemsOpen from '$lib/components/Analytics/PercentageOfItemsOpen.svelte';
 	import OnTimeAheadBehind from '$lib/components/Analytics/OnTimeAheadBehind.svelte';
+	import TrackingItemBarGraph from '$lib/components/Analytics/TrackingItemBarGraph.svelte';
 
 	let item = $state(page?.data?.trackingItems[0]);
 
@@ -61,6 +62,11 @@
 				{/key}
 			</div>
 		</div>
+
+		<div class="item-completion-byPriority">
+			<TrackingItemBarGraph />
+		</div>
+
 		<div class="percent-revised-end">
 			<PercentageOfItemsWAdjustedEnd trackingItems={page?.data?.trackingItems} />
 		</div>
@@ -77,7 +83,7 @@
 
 <style>
 	section {
-		background: var(--blue);
+		background-color: var(--blue);
 		min-height: 100vh;
 	}
 
@@ -124,7 +130,9 @@
 			'itemCalc itemCalc percentRevisedEnd'
 			'itemCalc itemCalc percentRevisedEnd'
 			'itemCalc itemCalc openItemPercentage'
-			'itemCalc itemCalc percentBehindOnAhead';
+			'itemCompPri itemCompPri openItemPercentage'
+			'itemCompPri itemCompPri percentBehindOnAhead'
+			'itemCompPri itemCompPri percentBehindOnAhead';
 		gap: 1em;
 		padding: 1em;
 		max-width: 100vw;
@@ -133,7 +141,8 @@
 	.percent-revised-end,
 	.percent-items-open,
 	.percent-behind-on-ahead,
-	.time-completion-comparison {
+	.time-completion-comparison,
+	.item-completion-byPriority {
 		color: var(--white);
 		border: solid 1px var(--gold);
 		padding: 1em;
@@ -141,9 +150,19 @@
 		box-shadow: 3px 3px 7px var(--white);
 	}
 
+	.time-completion-comparison,
+	.item-completion-byPriority {
+		max-width: calc(100vw - 350px);
+	}
+
 	.time-completion-comparison {
 		grid-area: itemCalc;
-		max-width: calc(100vw - 350px);
+		overflow-x: auto;
+	}
+
+	.item-completion-byPriority {
+		grid-area: itemCompPri;
+		overflow-y: auto;
 	}
 
 	.time-completion-comparison h3 {

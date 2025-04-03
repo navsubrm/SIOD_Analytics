@@ -1,8 +1,6 @@
 <script lang="ts">
-	import AnalyticsBoard from '$lib/IconComponents/AnalyticsBoard.svelte';
 	import Close from '$lib/IconComponents/Close.svelte';
-	import { getDaysBetweenDates } from '$lib/HelperFunctions/getDaysBetweenDates';
-	import SingleItemBarCompVersesDays from '$lib/components/Analytics/SingleItemBarCompVersesDays.svelte';
+	import Information from '$lib/IconComponents/Information.svelte';
 
 	let analyticsPopover: HTMLElement | undefined = $state();
 	let { item } = $props();
@@ -18,7 +16,7 @@
 </script>
 
 <div class="edit">
-	<button onclick={showPopover} title="View Stats"><AnalyticsBoard /></button>
+	<button onclick={showPopover} title="View Stats"><Information /></button>
 </div>
 
 <div class="analytics" popover bind:this={analyticsPopover}>
@@ -27,24 +25,21 @@
 			<Close --_height="30px" />
 		</button>
 	</div>
-	{#if item?.name}
-		<h3>{item?.name}</h3>
-		<p>
-			Days Tracked: {getDaysBetweenDates(new Date(item?.startDate), new Date())} day{getDaysBetweenDates(
-				new Date(item.startDate),
-				new Date()
-			) > 1
-				? 's'
-				: ''}.
-		</p>
-		<SingleItemBarCompVersesDays {item} />
-	{/if}
+	<div class="details">
+		{item.details}
+	</div>
 </div>
 
 <style>
-	h3 {
-		text-align: center;
-		padding-bottom: 0.5em;
+	.details {
+		margin-top: 30px;
+		padding: 1em;
+		min-width: 200px;
+		min-height: 200px;
+		height: 100%;
+		width: 100%;
+		max-width: max-content;
+		max-height: max-content;
 	}
 
 	button {
@@ -68,7 +63,6 @@
 		border: none;
 		border-radius: 0.5em;
 		opacity: 0;
-		width: max-content;
 	}
 
 	.analytics:popover-open {

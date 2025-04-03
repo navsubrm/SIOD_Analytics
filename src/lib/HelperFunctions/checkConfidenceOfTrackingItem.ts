@@ -2,6 +2,7 @@ import { getDaysBetweenDates } from './getDaysBetweenDates';
 import { truncateToDecimalPlaces } from './truncateNumber';
 
 export function checkConfidenceOfTrackingItem(item: TrackingItem) {
+	if (item.estimates.length == 0) return [0, 0, 0];
 	//Take the item start and most current end date, get total days allotted.
 	const startDate = item.startDate;
 	const endDate = item.projectedEndDates[0].date;

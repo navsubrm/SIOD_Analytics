@@ -1,95 +1,38 @@
 <script lang="ts">
 	import '@carbon/charts-svelte/styles.css';
-	import { BarChartSimple, ComboChart } from '@carbon/charts-svelte';
+	import { BarChartSimple } from '@carbon/charts-svelte';
 	import { page } from '$app/state';
 
-	const barData: any[] = [];
-	const comboData: any[] = [];
+	//Look at going back into this chart and adding scatter plot that records days until next due date.
 
-	const dataInputs = page?.data?.trackingItems.forEach((el: TrackingItem) => {
-		barData.push({ group: el.name, value: el.estimates[0].confidencePercentile });
-		comboData.push({
-			group: 'Confidence',
-			key: el.name,
-			value: el.estimates[0].confidencePercentile
-		});
-		comboData.push({
-			group: 'Completion',
-			key: el.name,
+	const sortedArray = page?.data?.trackingItems.sort(
+		(a: TrackingItem, b: TrackingItem) =>
+			a.priorityAssignments[0].priority < b.priorityAssignments[0].priority
+	);
+
+	const dataInputs = sortedArray.map((el: TrackingItem) => {
+		return {
+			group: `${el.priorityAssignments[0].priority}. ${el.name}`,
 			value: el.estimates[0].completionPercentile
-		});
+		};
 	});
 
-	const data = [
-		...barData
-		// { group: 'Qty', value: 65000 },
-		// { group: 'More', value: 29123 },
-		// { group: 'Sold', value: 35213 },
-		// { group: 'Restocking', value: 51213 },
-		// { group: 'Misc', value: 16932 }
-	];
+	const data = [...dataInputs];
 
 	const options = {
 		theme: 'g90',
-		title: 'Confidence By Tracking Item',
-		height: '400px',
+		title: 'Completion Estimate By Item & Priority',
+		resize: true,
 		toolbar: { enabled: false },
 		axes: {
 			left: { mapsTo: 'group', scaleType: 'labels', title: 'Tracking Item Name' },
-			bottom: { mapsTo: 'value', title: 'Confidence (%)' }
+			bottom: { mapsTo: 'value', title: 'Completion (%)' }
 		}
-	};
-
-	const comboChartOptions = {
-		title: 'Confidence/Completion (Line + Scatter + Bar)',
-		toolbar: { enabled: false },
-		axes: {
-			left: {
-				mapsTo: 'value',
-				title: 'Percentile Estimate (%)',
-				label: {
-					color: 'yellow'
-				}
-			},
-			bottom: {
-				scaleType: 'labels',
-				mapsTo: 'key'
-			}
-			// right: {
-			// 	title: 'Completion (%)',
-			// 	mapsTo: 'value',
-			// 	scaleType: 'linear',
-			// 	correspondingDatasets: ['Confidence', 'Completion']
-			// }
-		},
-		curve: 'curveMonotoneX',
-		color: {
-			scale: {
-				Confidence: '#118dff',
-				Completion: '#e66c37'
-			}
-		},
-		comboChartTypes: [
-			{
-				type: 'simple-bar',
-				correspondingDatasets: ['Completion']
-			},
-			// {
-			// 	type: 'scatter',
-			// 	correspondingDatasets: ['Confidence', 'Completion']
-			// },
-			{
-				type: 'line',
-				correspondingDatasets: ['Confidence']
-			}
-		],
-		height: '400px'
 	};
 </script>
 
 <div>
 	<BarChartSimple {data} {options} />
-	<ComboChart data={comboData} options={comboChartOptions} />
 </div>
 
 <style>
