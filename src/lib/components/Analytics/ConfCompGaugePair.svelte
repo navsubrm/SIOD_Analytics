@@ -6,8 +6,6 @@
 
 	let { item, estimates } = $props();
 
-	//console.log(`${item?.name}`, estimates);
-
 	function calculateGaugeData(estimates: TrackingItemEstimate[]) {
 		const [confidenceAvg, completionAvg] = getAverageEstimates(estimates);
 		const [priorConfAvg, priorCompAvg] = getPriorAverageEstimates(estimates);

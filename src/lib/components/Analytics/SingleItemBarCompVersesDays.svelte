@@ -25,37 +25,39 @@
 
 	const data: BarGraphDataSet[] = [];
 
-	item?.estimates?.forEach((el: TrackingItemEstimate) => {
-		const originalDaysUsed = truncateToDecimalPlaces(
-			(getDaysBetweenDates(startDate, el.createdAt) / origDayTotal) * 100
-		);
-		const daysUsed = truncateToDecimalPlaces(
-			(getDaysBetweenDates(startDate, el.createdAt) / dayTotal) * 100
-		);
-		const complete = truncateToDecimalPlaces(el.completionPercentile);
-		const delta = truncateToDecimalPlaces(complete - daysUsed);
+	if (item?.estimates.length > 0) {
+		item?.estimates?.forEach((el: TrackingItemEstimate) => {
+			const originalDaysUsed = truncateToDecimalPlaces(
+				(getDaysBetweenDates(startDate, el.createdAt) / origDayTotal) * 100
+			);
+			const daysUsed = truncateToDecimalPlaces(
+				(getDaysBetweenDates(startDate, el.createdAt) / dayTotal) * 100
+			);
+			const complete = truncateToDecimalPlaces(el?.completionPercentile);
+			const delta = truncateToDecimalPlaces(complete - daysUsed);
 
-		data.push({
-			group: '% of Time Past',
-			key: new Date(el.createdAt).toLocaleDateString(),
-			value: daysUsed
+			data.push({
+				group: '% of Time Past',
+				key: new Date(el.createdAt).toLocaleDateString(),
+				value: daysUsed
+			});
+			data.push({
+				group: '% of Task Completed',
+				key: new Date(el.createdAt).toLocaleDateString(),
+				value: complete
+			});
+			data.push({
+				group: 'Original % of Time Past',
+				key: new Date(el.createdAt).toLocaleDateString(),
+				value: originalDaysUsed
+			});
+			data.push({
+				group: 'Time/Comp Delta %',
+				key: new Date(el.createdAt).toLocaleDateString(),
+				delta: delta
+			});
 		});
-		data.push({
-			group: '% of Task Completed',
-			key: new Date(el.createdAt).toLocaleDateString(),
-			value: complete
-		});
-		data.push({
-			group: 'Original % of Time Past',
-			key: new Date(el.createdAt).toLocaleDateString(),
-			value: originalDaysUsed
-		});
-		data.push({
-			group: 'Time/Comp Delta %',
-			key: new Date(el.createdAt).toLocaleDateString(),
-			delta: delta
-		});
-	});
+	}
 
 	data.reverse();
 
@@ -85,8 +87,9 @@
 		curve: 'curveMonotoneX',
 		color: {
 			scale: {
-				Confidence: '#118dff',
-				Completion: '#e66c37'
+				// Confidence: '#118dff',
+				// Completion: '#e66c37',
+				'Original % of Time Past': '#ffffff'
 			}
 		},
 		comboChartTypes: [
@@ -127,7 +130,11 @@
 </script>
 
 <div>
-	<ComboChart {data} {options} />
+	{#if data.length == 0}
+		<p>No Estimate Data Available For This Item.</p>
+	{:else}
+		<ComboChart {data} {options} />
+	{/if}
 </div>
 
 <style>

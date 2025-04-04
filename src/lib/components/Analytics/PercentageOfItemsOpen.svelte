@@ -5,9 +5,11 @@
 	let title = $state('Percentage Complete');
 
 	let totalItems = trackingItems.length;
+
 	let open = trackingItems.filter((el: TrackingItem) => {
-		if (el.estimates[0].completionPercentile < 100) return el;
+		if (!el?.estimates[0] || el?.estimates[0]?.completionPercentile < 100) return el;
 	}).length;
+
 	let complete = totalItems - open;
 
 	function calcAverage(total: number, item: number): number {

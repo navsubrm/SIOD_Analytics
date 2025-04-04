@@ -7,7 +7,9 @@
 	import PercentageOfItemsWAdjustedEnd from '$lib/components/Analytics/PercentageOfItemsWAdjustedEnd.svelte';
 	import PercentageOfItemsOpen from '$lib/components/Analytics/PercentageOfItemsOpen.svelte';
 	import OnTimeAheadBehind from '$lib/components/Analytics/OnTimeAheadBehind.svelte';
-	import TrackingItemBarGraph from '$lib/components/Analytics/TrackingItemBarGraph.svelte';
+	import CompletionByItemPriority from '$lib/components/Analytics/CompletionByItemPriority.svelte';
+	import AverageDelta from '$lib/components/Analytics/AverageDelta.svelte';
+	import DaysToNextMilestone from '$lib/components/Analytics/DaysToNextMilestone.svelte';
 
 	let item = $state(page?.data?.trackingItems[0]);
 
@@ -36,11 +38,11 @@
 		<div class="flex-row">
 			<div class="details milestone">
 				<h4>Next Milestone:</h4>
-				<p>123 Days</p>
+				<DaysToNextMilestone nextEventData={page?.data?.nextEventData} />
 			</div>
 			<div class="details delta-calc">
 				<h4>Average Delta:</h4>
-				<p>-2.5%</p>
+				<p><AverageDelta trackingItems={page?.data?.trackingItems} /></p>
 			</div>
 			<button class="btn" onclick={returnHome}>Return Home</button>
 		</div>
@@ -64,7 +66,7 @@
 		</div>
 
 		<div class="item-completion-byPriority">
-			<TrackingItemBarGraph />
+			<CompletionByItemPriority trackingItems={page?.data?.trackingItems} />
 		</div>
 
 		<div class="percent-revised-end">
@@ -113,6 +115,7 @@
 	.milestone,
 	.delta-calc {
 		text-align: right;
+		width: max-content;
 	}
 
 	.milestone {
