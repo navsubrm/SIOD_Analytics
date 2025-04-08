@@ -9,14 +9,14 @@ declare global {
 		initialReason: string;
 		coreCapability: string;
 		startDate: Date;
-		projectedEndDates: ProjectedEndDate[];
+		projectedEndDates?: ProjectedEndDate[];
 		finalReasonId?: string;
 		closedDate?: Date;
 		parentId?: string;
-		parentName: string;
-		priorityAssignments: TrackingItemPriority[];
-		estimates: TrackingItemEstimate[];
-		createdAt: Date;
+		parentName?: string;
+		priorityAssignments?: TrackingItemPriority[];
+		estimates?: TrackingItemEstimate[];
+		createdAt?: Date;
 		updatedAt?: Date;
 	}
 
@@ -35,8 +35,9 @@ declare global {
 	interface TrackingItemEstimate {
 		_id: string;
 		completionPercentile: number;
-		trackingEventId?: string;
-		trackingEventName?: string;
+		trackingEventId: string;
+		trackingEventName: string;
+		estimateDate: Date;
 		createdAt: Date;
 	}
 
@@ -47,6 +48,28 @@ declare global {
 		endDate: string;
 		associatedEventId?: string;
 		createdAt: Date;
+	}
+
+	interface TrackingItemValidations {
+		missingName?: boolean;
+		missingDetails?: boolean;
+		missingReason?: boolean;
+		invalidReason?: boolean;
+		missingCoreCapability?: boolean;
+		invalidStartDate?: boolean;
+		missingDate?: boolean;
+		invalidDate?: boolean;
+		missingPriority?: boolean;
+		invalidPriority?: boolean;
+		missingCompletionPercentile?: boolean;
+		invalidCompletionPercentile?: boolean;
+		invalidTrackingEventId?: boolean;
+		missingTrackingEvent?: boolean;
+		projectedEndDatesArrayError?: boolean;
+		priorityAssignmentsArrayError?: boolean;
+		estimatesArrayError?: boolean;
+		missingEstimateDate?: boolean;
+		invalidEstimateDate?: boolean;
 	}
 
 	namespace App {

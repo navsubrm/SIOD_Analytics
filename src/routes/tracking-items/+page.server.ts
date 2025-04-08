@@ -1,33 +1,14 @@
 import { ObjectId } from 'mongodb';
 import * as TrackingItemModel from '$lib/models/TrackingItemModel';
-import * as TrackingEventModel from '$lib/models/TrackingEventModel';
-import type { Actions } from './$types';
+import type { PageServerLoad, Actions } from './$types';
 
-export async function load() {
+export const load: PageServerLoad = async () => {
 	return {
-		trackingItems: await TrackingItemModel.fetchTrackingItems(),
-		reasonForUpdate: await TrackingEventModel.fetchTrackingEvents()
+		trackingItems: await TrackingItemModel.fetchTrackingItems()
 	};
-}
+};
 
 export const actions = {
-	'reason-for-update': async ({ request }) => {
-		const data = Object.fromEntries(await request.formData());
-
-		const newEvent: TrackingEvent = {
-			name: data.name.toString(),
-			startDate: data['event-start'].toString(),
-			endDate: data['event-end'].toString(),
-			createdAt: new Date(new Date().toLocaleDateString())
-		};
-
-		if (data?.['associated-event-id'])
-			newEvent.associatedEventId = JSON.parse(data['associated-event-id'].toString()).value;
-
-		await TrackingEventModel.createTrackingEvent(newEvent);
-
-		return { success: true };
-	},
 	'add-tracking-item': async ({ request }) => {
 		const data = Object.fromEntries(await request.formData());
 
@@ -79,24 +60,6 @@ export const actions = {
 			newItem.parentName = JSON.parse(data['parent-id'].toString()).label;
 		}
 		await TrackingItemModel.editTrackingItem(newItem);
-
-		return { success: true };
-	},
-	'add-estimate-data': async ({ request }) => {
-		const data = Object.fromEntries(await request.formData());
-
-		const recordId = data['tracking-item-id'].toString();
-		const trackingEvent = JSON.parse(data['event-id'].toString());
-
-		const newEstimate: TrackingItemEstimate = {
-			_id: new ObjectId().toString(),
-			completionPercentile: Number(data['comp-percentile']),
-			trackingEventId: trackingEvent.value,
-			trackingEventName: trackingEvent.label,
-			createdAt: new Date()
-		};
-
-		await TrackingItemModel.postNewEstimate(recordId, newEstimate);
 
 		return { success: true };
 	}

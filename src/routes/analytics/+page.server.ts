@@ -1,5 +1,5 @@
-import * as TrackingItemModel from '$lib/dbFiles/TrackingItemModel';
-import * as TrackingEventModel from '$lib/dbFiles/TrackingEventModel';
+import * as TrackingItemModel from '$lib/models/TrackingItemModel';
+import * as TrackingEventModel from '$lib/models/TrackingEventModel';
 
 export async function load() {
 	return {

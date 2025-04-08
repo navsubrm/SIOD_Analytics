@@ -1,9 +1,9 @@
-import { MongoClient, ObjectId } from 'mongodb';
+import { MongoClient, Db, Collection, ObjectId } from 'mongodb';
 import { mongoInit } from './connect';
 
 const client: MongoClient = await mongoInit();
-const db = client.db('siod_analytics');
-const TrackingEventCollection = db.collection('tracking_events');
+const db: Db = client.db('siod_analytics');
+const TrackingEventCollection: Collection = db.collection('tracking_events');
 
 export async function createTrackingEvent(item: TrackingEvent) {
 	try {

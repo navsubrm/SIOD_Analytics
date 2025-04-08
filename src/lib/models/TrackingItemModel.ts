@@ -1,10 +1,9 @@
-import { MongoClient, ObjectId as ObjectIdConvert } from 'mongodb';
+import { Collection, MongoClient, Db, ObjectId } from 'mongodb';
 import { mongoInit } from './connect';
-import { coreCapability } from '$lib/stores/coreCapability';
 
 const client: MongoClient = await mongoInit();
-const db = client.db('siod_analytics');
-const TrackingItemsCollection = db.collection('tracking_items');
+const db: Db = client.db('siod_analytics');
+const TrackingItemsCollection: Collection = db.collection('tracking_items');
 
 export async function setNewFields() {
 	try {
@@ -30,7 +29,7 @@ export async function createTrackingItem(item: TrackingItem) {
 export async function editTrackingItem(item: TrackingItem) {
 	try {
 		const response = await TrackingItemsCollection.updateOne(
-			{ _id: new ObjectIdConvert(item._id) },
+			{ _id: new ObjectId(item._id) },
 			{
 				$set: {
 					name: item.name,
@@ -64,7 +63,7 @@ export async function fetchTrackingItems() {
 export async function postNewEstimate(id: string, newEstimate: TrackingItemEstimate) {
 	try {
 		const response = await TrackingItemsCollection.updateOne(
-			{ _id: new ObjectIdConvert(id) },
+			{ _id: new ObjectId(id) },
 			{
 				$push: {
 					estimates: {
