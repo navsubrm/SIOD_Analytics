@@ -2,14 +2,14 @@
 	import Select from 'svelte-select';
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
-	import SingleItemBarCompVersesDays from '$lib/components/Analytics/SingleItemBarCompVersesDays.svelte';
-	import FormStyles from '$lib/components/forms/FormStyles.svelte';
-	import PercentageOfItemsWAdjustedEnd from '$lib/components/Analytics/PercentageOfItemsWAdjustedEnd.svelte';
-	import PercentageOfItemsOpen from '$lib/components/Analytics/PercentageOfItemsOpen.svelte';
-	import OnTimeAheadBehind from '$lib/components/Analytics/OnTimeAheadBehind.svelte';
-	import CompletionByItemPriority from '$lib/components/Analytics/CompletionByItemPriority.svelte';
-	import AverageDelta from '$lib/components/Analytics/AverageDelta.svelte';
-	import DaysToNextMilestone from '$lib/components/Analytics/DaysToNextMilestone.svelte';
+	import SingleItemBarCompVersesDays from '$lib/ChartsAndGraphs/ui/Combo_Bar_Line_SingleItemBarCompVersesDays.svelte';
+	import FormStyles from '$lib/components/FormStyles.svelte';
+	import PercentageOfItemsWAdjustedEnd from '$lib/ChartsAndGraphs/ui/Pie_PercentageOfItemsWAdjustedEnd.svelte';
+	import PercentageOfItemsOpen from '$lib/ChartsAndGraphs/ui/Pie_PercentageOfItemsOpen.svelte';
+	import OnTimeAheadBehind from '$lib/ChartsAndGraphs/ui/Pie_OnTimeAheadBehind.svelte';
+	import CompletionByItemPriority from '$lib/ChartsAndGraphs/ui/Bar_CompletionByItemPriority.svelte';
+	import AverageDelta from '$lib/ChartsAndGraphs/ui/Value_AverageDelta.svelte';
+	import DaysToNextMilestone from '$lib/ChartsAndGraphs/ui/Value_DaysToNextMilestone.svelte';
 
 	let item = $state(page?.data?.trackingItems[0]);
 
@@ -30,6 +30,10 @@
 	}
 </script>
 
+<svelte:head>
+	<title>SIOD Analytics</title>
+</svelte:head>
+
 <section>
 	<header class="flex-row">
 		<div>
@@ -42,7 +46,7 @@
 			</div>
 			<div class="details delta-calc">
 				<h4>Average Delta:</h4>
-				<p><AverageDelta trackingItems={page?.data?.trackingItems} /></p>
+				<p><AverageDelta trackingItemList={page?.data?.trackingItems} /></p>
 			</div>
 			<button class="btn" onclick={returnHome}>Return Home</button>
 		</div>
@@ -66,19 +70,19 @@
 		</div>
 
 		<div class="item-completion-byPriority">
-			<CompletionByItemPriority trackingItems={page?.data?.trackingItems} />
+			<CompletionByItemPriority trackingItemList={page?.data?.trackingItems} />
 		</div>
 
 		<div class="percent-revised-end">
-			<PercentageOfItemsWAdjustedEnd trackingItems={page?.data?.trackingItems} />
+			<PercentageOfItemsWAdjustedEnd trackingItemList={page?.data?.trackingItems} />
 		</div>
 
 		<div class="percent-items-open">
-			<PercentageOfItemsOpen trackingItems={page?.data?.trackingItems} />
+			<PercentageOfItemsOpen trackingItemList={page?.data?.trackingItems} />
 		</div>
 
 		<div class="percent-behind-on-ahead">
-			<OnTimeAheadBehind trackingItems={page?.data?.trackingItems} />
+			<OnTimeAheadBehind trackingItemList={page?.data?.trackingItems} />
 		</div>
 	</div>
 </section>

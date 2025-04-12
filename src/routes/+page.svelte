@@ -1,26 +1,17 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import gsap from 'gsap';
-	import CreateReasonForUpdateForm from '$lib/components/forms/CreateForms/CreateReasonForUpdateForm.svelte';
-	import CreateTrackingItemForm from '$lib/components/forms/CreateForms/CreateTrackingItemForm.svelte';
-	import Close from '$lib/IconComponents/Close.svelte';
-	import Add from '$lib/IconComponents/Add.svelte';
-	import TrackingItemList from '$lib/TrackingItemList/TrackingItemList.svelte';
 	import { goto } from '$app/navigation';
-	import AnalyticsBoard from '$lib/IconComponents/AnalyticsBoard.svelte';
-	import TrackingItemTable from '$lib/components/TrackingItemTable/TrackingItemTable.svelte';
-	import Toggle from '$lib/IconComponents/Toggle.svelte';
+	import TrackingItemCardList from '$lib/TrackingItem/ui/CardListComponents/TrackingItemCardList.svelte';
+	import AnalyticsBoard from '$lib/components/IconComponents/AnalyticsBoard.svelte';
+	import TrackingItemTable from '$lib/TrackingItem/ui/TableListComponents/TrackingItemTable.svelte';
+	import Toggle from '$lib/components/IconComponents/Toggle.svelte';
+	import AddNewTrackingItemButton from '$lib/TrackingItem/ui/AddNewTrackingItemButton.svelte';
+	import type { PageProps } from './$types';
 
-	let menu: HTMLElement | undefined = $state();
+	let { data }: PageProps = $props();
+	let trackingItemList = data.trackingItemList;
+
 	let viewTable: boolean = $state(true);
-
-	function toggleMenuOpen() {
-		gsap.to(menu as HTMLElement, { x: 0, duration: 0.5 });
-	}
-
-	function toggleMenuClosed() {
-		gsap.to(menu as HTMLElement, { x: '-100%', duration: 0.5 });
-	}
 
 	function goToAnalytics() {
 		goto('/analytics');
@@ -29,45 +20,28 @@
 
 <svelte:head>
 	{#key page?.url}
-		<title>SIOD Analytics</title>
+		<title>SIOD Tracking Items</title>
 	{/key}
 </svelte:head>
 
 <section>
-	<div class="form-container" bind:this={menu}>
-		<div class="close-icon">
-			<button onclick={toggleMenuClosed}>
-				<Close --_height="30px" />
-			</button>
-		</div>
-		<h3>Data Entry:</h3>
-		<CreateReasonForUpdateForm />
-		<CreateTrackingItemForm />
-	</div>
-
 	<div class="data-container">
-		<h3>
-			Active Tracking Items: <button class="add-new-item-button" onclick={toggleMenuOpen}
-				><Add --_height="30px" /></button
-			><button onclick={goToAnalytics}><AnalyticsBoard /></button>
+		<h3>Active Tracking Items:</h3>
+		<div>
+			<AddNewTrackingItemButton actionUrl={'?/add-new-trackingItem'} />
+			<button onclick={goToAnalytics}><AnalyticsBoard /></button>
 			<button onclick={() => (viewTable = !viewTable)}>
 				<Toggle bind:active={viewTable} />
 			</button>
-		</h3>
+		</div>
 	</div>
-	{#if viewTable}
-		<TrackingItemTable trackingItems={page?.data?.trackingItems} />
-	{:else}
-		<TrackingItemList />
-		<!-- <div class="data-container">
-			<h3>
-				Active Tracking Items: <button class="add-new-item-button" onclick={toggleMenuOpen}
-					><Add --_height="30px" /></button
-				><button onclick={goToAnalytics}><AnalyticsBoard /></button>
-			</h3>
-			
-		</div> -->
-	{/if}
+	{#key viewTable}
+		{#if viewTable}
+			<TrackingItemTable {trackingItemList} />
+		{:else}
+			<TrackingItemCardList {trackingItemList} />
+		{/if}
+	{/key}
 </section>
 
 <style>
@@ -77,6 +51,10 @@
 	}
 
 	.data-container {
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		gap: 2em;
 		padding: 1em;
 		border: solid 1px var(--blue);
 	}
@@ -88,52 +66,18 @@
 		gap: 0.25em;
 	}
 
-	.data-container h3 button {
+	.data-container button {
 		border: none;
 		background: none;
 	}
 
-	.data-container h3 button :global(svg) {
+	.data-container button :global(svg) {
 		stroke: var(--gold);
 	}
 
-	.data-container h3 button:hover :global(svg) {
+	.data-container button:hover :global(svg) {
 		stroke: var(--orange);
 		cursor: pointer;
 		scale: 1.02;
-	}
-
-	.form-container {
-		position: fixed;
-		left: 0;
-		top: 0;
-		right: auto;
-		bottom: 0;
-		width: 100%;
-		max-width: 500px;
-		background: var(--white);
-		padding: 1em;
-		border-right: solid 3px var(--blue);
-		transform: translateX(-100%);
-		overflow-x: hidden;
-		overflow-y: auto;
-		z-index: 10000;
-	}
-
-	.close-icon {
-		position: absolute;
-		top: 10px;
-		right: 10px;
-		background: none;
-	}
-
-	.close-icon button,
-	.add-new-item-button {
-		background: none;
-		border: none;
-	}
-
-	.form-container :global(form) {
-		margin-block: 0.5em;
 	}
 </style>

@@ -1,12 +1,14 @@
 import { ObjectId } from 'mongodb';
+import { getTrackingItemList } from '$lib/TrackingItem/utils/getTrackingItemList';
+import { getTrackingEventList } from '$lib/TrackingEvents/utils/getTrackingEventList';
 import * as TrackingItemModel from '$lib/models/TrackingItemModel';
 import * as TrackingEventModel from '$lib/models/TrackingEventModel';
 import type { Actions } from './$types';
 
 export async function load() {
 	return {
-		trackingItems: await TrackingItemModel.fetchTrackingItems(),
-		reasonForUpdate: await TrackingEventModel.fetchTrackingEvents()
+		trackingItemList: await getTrackingItemList(),
+		reasonForUpdate: await getTrackingEventList()
 	};
 }
 

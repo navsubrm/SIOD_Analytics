@@ -1,5 +1,5 @@
 import { Collection, MongoClient, Db, ObjectId } from 'mongodb';
-import { mongoInit } from './connect';
+import { mongoInit } from '../mongoConnect';
 
 const client: MongoClient = await mongoInit();
 const db: Db = client.db('siod_analytics');
