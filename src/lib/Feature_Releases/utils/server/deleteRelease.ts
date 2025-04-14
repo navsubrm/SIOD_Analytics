@@ -4,8 +4,8 @@ import { mongoInit } from '$lib/server/mongoConnect';
 
 const db: Db = await mongoInit();
 
-async function deleteRelease(id: string, stageId: string) {
-	const Collection: Collection = db.collection('features');
+async function deleteRelease(id: string, stageId: string, collection: string) {
+	const Collection: Collection = db.collection(collection);
 
 	try {
 		const response = await Collection.updateOne(
@@ -24,8 +24,6 @@ async function deleteRelease(id: string, stageId: string) {
 				]
 			}
 		);
-
-		console.log(response);
 
 		if (response.modifiedCount == 0) console.log('Error from update, record not modified.');
 		return response;

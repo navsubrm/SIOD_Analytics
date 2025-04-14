@@ -7,7 +7,7 @@ interface Feature {
 	plannedReleaseDate?: Date;
 	coreCapability: string;
 	associatedJiraTickets: string[];
-	releaseStages: ReleaseStage[];
+	releaseStages?: ReleaseStage[];
 	createdAt: Date;
 	updatedAt?: Date;
 }

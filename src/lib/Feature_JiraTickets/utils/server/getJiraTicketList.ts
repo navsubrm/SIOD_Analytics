@@ -7,7 +7,7 @@ async function getJiraTicketList() {
 		if (list) return list;
 		return [];
 	} catch (err) {
-		console.log('Error from get milestone list: ', err);
+		console.log('Error from get jiraTicket list: ', err);
 		return false;
 	}
 }

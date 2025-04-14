@@ -5,6 +5,9 @@
 	let { Child, popover = $bindable(undefined), iconColor = 'var(--orange)' } = $props();
 
 	let popoverOpen = $state(false);
+	// let top = $state(0);
+	// let left = $state(0);
+	// let move = $state(false);
 
 	export function showPopover() {
 		popoverOpen = true;
@@ -14,6 +17,7 @@
 	function closePopover() {
 		popoverOpen = false;
 		popover?.hidePopover();
+		popover.removeEventListener('mousemove', handleMove);
 	}
 
 	$effect(() => {
@@ -29,6 +33,21 @@
 			}
 		);
 	});
+
+	// function onMouseMove(e) {
+	// 	if (move) {
+	// 		left += e.movementX * 2;
+	// 		top += e.movementY * 2;
+	// 	}
+	// }
+
+	// function toggleMove() {
+	// 	move = !move;
+	// }
+
+	// onmousedown={toggleMove}
+	// onmousemove={onMouseMove}
+	//style="top: {top}px; left: {left}px;"
 </script>
 
 <div class="popover" popover bind:this={popover}>
@@ -49,7 +68,7 @@
 <style>
 	.popover {
 		--_line-padding: 2px;
-		position: fixed;
+		position: absolute;
 		padding: var(--_line-padding);
 		opacity: 0;
 		border: none;
@@ -57,15 +76,17 @@
 	}
 
 	.popover:popover-open {
-		position: fixed;
+		position: absolute;
 		inset: 0;
+		/* top right bottom left */
 		margin: auto;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
 		opacity: 1;
-		width: max-content;
+		width: var(--_popover-width, max-content);
+		height: var(--_popover-width, max-content);
 		max-width: 100%;
 		transform: translateY(0);
 		background: conic-gradient(var(--orange) var(--_cone-width), transparent var(--_cone-width));
@@ -87,8 +108,8 @@
 		font-weight: bold;
 		border: none;
 		border-radius: 0.5em;
-		height: max-content;
-		width: 100%;
+		/* height: max-content; */
+		/* width: 100%; */
 		min-width: 300px;
 	}
 

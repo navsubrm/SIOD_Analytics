@@ -10,7 +10,7 @@ function validateFeatureInputs(
 	priority: number,
 	plannedReleaseDate: string,
 	coreCapability: string,
-	associatedJiraTickets: string[]
+	associatedJiraTickets: string
 	//releaseStages: ReleaseStage[]
 ) {
 	const validations: FeatureValidations = {};

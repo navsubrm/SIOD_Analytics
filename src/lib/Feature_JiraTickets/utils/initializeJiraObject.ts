@@ -1,62 +1,67 @@
 import { ObjectId } from 'mongodb';
-import type { Feature, FeatureForm } from '../types';
+import type { JIRATicket, JIRAForm } from '../types';
 
-function initializeFeatureObject(inputs: FeatureForm) {
-	const newFeature: Feature = {
+function initializeJiraObject(inputs: JIRAForm) {
+	const newJiraTicket: JIRATicket = {
 		name: inputs.name,
 		details: inputs.details,
 		startDate: new Date(inputs?.startDate?.toString() as string),
-		priority: inputs.priority,
+		priority: inputs?.priority,
+		opr: inputs?.opr,
 		plannedReleaseDate: new Date(inputs?.plannedReleaseDate?.toString() as string),
-		coreCapability: JSON.parse(inputs.coreCapability.toString()).value,
-		associatedJiraTickets: [...JSON.parse(inputs?.associatedJiraTickets.toString())],
+		milestones: [...JSON.parse(inputs?.milestones?.toString())],
 		createdAt: new Date()
 	};
 
 	if (!inputs?.id) {
-		newFeature.releaseStages = [
+		newJiraTicket.releaseStages = [
+			{
+				_id: new ObjectId().toString(),
+				stage: 'Customer Requirements',
+				date: new Date(),
+				projectedTime: 0.25,
+				updatedAt: null
+			},
+			{
+				_id: new ObjectId().toString(),
+				stage: 'Story Boarding',
+				date: null,
+				projectedTime: 0.2,
+				updatedAt: null
+			},
 			{
 				_id: new ObjectId().toString(),
 				stage: 'In Dev',
-				date: new Date(),
+				date: null,
+				projectedTime: 0.3,
 				updatedAt: null
 			},
 			{
 				_id: new ObjectId().toString(),
-				stage: 'Released to Dev',
+				stage: 'In Testing',
 				date: null,
-				updatedAt: null
-			},
-			{
-				_id: new ObjectId().toString(),
-				stage: 'Released to IL4',
-				date: null,
-				updatedAt: null
-			},
-			{
-				_id: new ObjectId().toString(),
-				stage: 'Released to IL6',
-				date: null,
+				projectedTime: 0.15,
 				updatedAt: null
 			},
 			{
 				_id: new ObjectId().toString(),
 				stage: 'User Accepted',
 				date: null,
+				projectedTime: 0.05,
 				updatedAt: null
 			},
 			{
 				_id: new ObjectId().toString(),
-				stage: 'OA approved',
+				stage: 'Closed',
 				date: null,
 				updatedAt: null
 			}
 		];
 	}
 
-	if (inputs?.id) newFeature.updatedAt = new Date();
+	if (inputs?.id) newJiraTicket.updatedAt = new Date();
 
-	return newFeature;
+	return newJiraTicket;
 }
 
-export { initializeFeatureObject };
+export { initializeJiraObject };

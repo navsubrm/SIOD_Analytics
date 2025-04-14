@@ -1,12 +1,9 @@
 <script lang="ts">
 	import '$lib/styles/form.css';
 	import { page } from '$app/state';
-	//import PostMilestoneForm from '$lib/Feature_Milestones/ui/PostMilestoneForm.svelte';
 	import DisplayFeatureTableButton from '$lib/Feature_Features/ui/DisplayTableButton.svelte';
-	import MilestoneSelect from '$lib/Feature_Milestones/ui/MilestoneSelect.svelte';
 	import DisplayMilestoneTableButton from '$lib/Feature_Milestones/ui/DisplayMilestoneTableButton.svelte';
-	import PostForm from '$lib/Feature_Releases/ui/PostForm.svelte';
-	//import FeatureTable from '$lib/Feature_Features/ui/Table.svelte';
+	import DisplayJIRATableButton from '$lib/Feature_JiraTickets/ui/DisplayTableButton.svelte';
 
 	let value: string | undefined = $state();
 </script>
@@ -24,6 +21,9 @@
 	</span>
 	<div>
 		<DisplayFeatureTableButton />
+	</div>
+	<div>
+		<DisplayJIRATableButton />
 	</div>
 </section>
 

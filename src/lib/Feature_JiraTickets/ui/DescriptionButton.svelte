@@ -1,31 +1,31 @@
 <script lang="ts">
 	import PopoverContainer from '$lib/components/PopoverContainer.svelte';
-	import Edit from '$lib/components/IconComponents/Edit.svelte';
+	import Information from '$lib/components/IconComponents/Information.svelte';
 	import type { SvelteComponent } from 'svelte';
-	import PostForm from './PostForm.svelte';
 
 	let popoverContainer: SvelteComponent | undefined = $state();
-	let { item, stage, collection } = $props();
+	let { item } = $props();
 
 	function showPopover() {
 		popoverContainer?.showPopover();
 	}
 </script>
 
-<button onclick={showPopover} title="Edit Stage"><Edit /></button>
+<button onclick={showPopover} title="View Stats"><Information --_hover-fill="var(--gold)" /></button
+>
 
 <PopoverContainer Child={popoverChild} bind:this={popoverContainer} />
 
 {#snippet popoverChild()}
 	<div>
-		<h3>Update Release Date:</h3>
-		<PostForm --_form-min-width="100%" {item} {stage} {collection} />
+		<h3>Description:</h3>
+		<p>{item.details}</p>
 	</div>
 {/snippet}
 
 <style>
 	button {
-		--_stroke: var(--orange);
+		--_fill: var(--orange);
 		--_height: 20px;
 		background: none;
 		border: none;
@@ -38,5 +38,11 @@
 
 	div {
 		text-align: left;
+		height: 100%;
+	}
+
+	p {
+		margin-top: 1.5em;
+		max-width: 50ch;
 	}
 </style>

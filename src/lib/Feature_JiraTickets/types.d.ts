@@ -1,14 +1,13 @@
 interface JIRATicket {
-	_id?: ObjectId | string | undefined;
-	name: string; //Use JIRA Ticket ID
+	_id?: string;
+	name?: string; //Use JIRA Ticket ID
+	startDate?: Date;
+	plannedReleaseDate?: Date;
+	priority?: string;
+	opr?: string;
+	milestones?: string[];
 	details: string;
-	startDate: Date;
-	originalPlannedEndDate: Date;
-	featureId?: string;
-	releaseStages: ReleaseStage[];
-	milestones: string[];
-	OPR?: string;
-	estimates?: TrackingItemEstimate[];
+	releaseStages?: ReleaseStage[];
 	createdAt?: Date;
 	updatedAt?: Date;
 	closed?: Date;
@@ -17,14 +16,24 @@ interface JIRATicket {
 interface JIRATicketValidations {
 	missingName?: boolean;
 	missingDetails?: boolean;
-	missingStartDate?: boolean;
 	invalidStartDate?: boolean;
-	missingPlannedEndDate?: boolean;
-	invalidPlannedEndDate?: boolean;
-	missingCoreCapability?: boolean;
-	missingFeature?: boolean;
-	missingReleaseStage?: boolean;
-	invalidReleaseStage?: boolean;
+	invalidPlannedReleaseDate?: boolean;
+	invalidPriority?: boolean;
+	invalidMilestones?: boolean;
+	invalidOPR?: boolean;
+	dbFail?: boolean;
 }
 
-export type { JIRATicketValidations, JIRATicket };
+interface JIRAForm extends FormDataEntryValue {
+	id?: string;
+	name: string;
+	startDate: string;
+	plannedReleaseDate: string;
+	priority: string;
+	opr?: string;
+	milestones: string;
+	details: string;
+	releaseStages: ReleaseStage[];
+}
+
+export type { JIRATicketValidations, JIRATicket, JIRAForm };

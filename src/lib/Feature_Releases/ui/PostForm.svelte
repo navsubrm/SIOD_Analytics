@@ -3,10 +3,11 @@
 	import FormStyles from '$lib/components/FormStyles.svelte';
 	import { formatDateInputValue } from '$lib/utils/formatDateInputValue';
 	import { updateList } from '$lib/Feature_Features/utils/stores/activeList';
+	import { updateList as JiraTicketList } from '$lib/Feature_JiraTickets/utils/stores/activeList';
 	import type { ReleaseStage } from '../types';
 	import type { ReleaseStageValidations } from '../types';
 
-	let { item, stage } = $props();
+	let { item, stage, collection } = $props();
 
 	let processing = $state(false);
 	let alerts: ReleaseStageValidations = $state({}) as ReleaseStageValidations;
@@ -20,7 +21,7 @@
 	<span class="basic-form">
 		<form
 			method="POST"
-			action="/?/edit-release"
+			action="/?/edit-release&collection={collection}"
 			use:enhance={({}) => {
 				processing = true;
 
@@ -33,7 +34,8 @@
 					}
 					if (result.type == 'success') {
 						success = true;
-						updateList.set(true);
+						if (collection == 'features') updateList.set(true);
+						if (collection == 'jira-tickets') JiraTicketList.set(true);
 					}
 				};
 			}}

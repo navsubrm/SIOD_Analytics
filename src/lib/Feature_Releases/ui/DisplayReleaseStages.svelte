@@ -6,7 +6,7 @@
 	import DeleteButton from './DeleteButton.svelte';
 
 	let popoverContainer: SvelteComponent | undefined = $state();
-	let { item } = $props();
+	let { item, collection } = $props();
 
 	function showPopover() {
 		popoverContainer?.showPopover();
@@ -40,8 +40,8 @@
 						<td class="red" class:green={stage?.date !== null}
 							>{!stage?.date ? 'Future' : new Date(stage.date).toLocaleDateString()}</td
 						>
-						<td><EditButton {item} {stage} /></td>
-						<td><DeleteButton {item} {stage} /></td>
+						<td><EditButton {item} {stage} {collection} /></td>
+						<td><DeleteButton {item} {stage} {collection} /></td>
 					</tr>
 				{/each}
 			</tbody>

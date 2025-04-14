@@ -2,19 +2,23 @@
 	//import { enhance } from '$app/forms';
 	import Delete from '$lib/components/IconComponents/Delete.svelte';
 	import { updateList } from '$lib/Feature_Features/utils/stores/activeList';
+	import { updateList as jiraTicketList } from '$lib/Feature_JiraTickets/utils/stores/activeList';
 
-	let { item, stage } = $props();
+	let { item, stage, collection } = $props();
 	let deleteForm: HTMLFormElement = $state() as HTMLFormElement;
 
 	async function handleDelete() {
 		if (confirm('Are you sure you want to delete this release stage?')) {
 			const data = new FormData(deleteForm);
-			const response = await fetch('/?/delete-release', {
+			const response = await fetch(`/?/delete-release&collection=${collection}`, {
 				method: 'POST',
 				body: data
 			});
 
-			if (response.ok) updateList.set(true);
+			if (response.ok) {
+				if (collection == 'features') updateList.set(true);
+				if (collection == 'jira-tickets') jiraTicketList.set(true);
+			}
 		}
 	}
 </script>

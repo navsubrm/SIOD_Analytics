@@ -4,8 +4,8 @@ import type { ReleaseForm } from '../../types';
 //import { validateReleaseInputs } from '../validateReleaseInputs';
 import { deleteRelease } from './deleteRelease';
 
-async function handleDeleteRelease(data: ReleaseForm) {
-	const response = deleteRelease(data.id as string, data.stageId);
+async function handleDeleteRelease(data: ReleaseForm, collection: string) {
+	const response = deleteRelease(data.id as string, data.stageId, collection);
 
 	if (!response) return { success: false, dbFail: true };
 

@@ -8,7 +8,6 @@
 	async function updateMilestones() {
 		const response = await fetch('/api/milestone/get-milestone-list');
 		const data = await response.json();
-		console.log('Active List updated.', data);
 		$activeList = data;
 		$updateList = false;
 	}

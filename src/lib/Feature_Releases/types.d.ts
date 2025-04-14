@@ -2,6 +2,7 @@ interface ReleaseStage {
 	_id?: string;
 	stage?: string;
 	date: Date | null;
+	projectedTime?: number | undefined;
 	updatedAt?: Date | null;
 }
 
@@ -16,6 +17,7 @@ interface ReleaseForm extends FormDataEntryValue {
 	id?: string;
 	stageId: string;
 	date: string | null;
+	projectedTime?: string;
 	updatedAt: Date | null;
 }
 

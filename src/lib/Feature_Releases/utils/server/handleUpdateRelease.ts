@@ -3,7 +3,7 @@ import { initializeReleaseObject } from '../initializeReleaseObject';
 import { validateReleaseInputs } from '../validateReleaseInputs';
 import { updateRelease } from './updateRelease';
 
-async function handleUpdateRelease(data: ReleaseForm) {
+async function handleUpdateRelease(data: ReleaseForm, collection: string) {
 	const validations = validateReleaseInputs(
 		data?.id as string,
 		data?.stageId as string,
@@ -14,7 +14,7 @@ async function handleUpdateRelease(data: ReleaseForm) {
 
 	const newRelease = initializeReleaseObject(data);
 
-	const response = updateRelease(data.id as string, data.stageId, newRelease);
+	const response = updateRelease(data.id as string, data.stageId, newRelease, collection);
 
 	if (!response) return { success: false, dbFail: true };
 

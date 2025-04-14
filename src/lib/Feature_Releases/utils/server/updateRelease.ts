@@ -5,8 +5,13 @@ import { mongoInit } from '$lib/server/mongoConnect';
 
 const db: Db = await mongoInit();
 
-async function updateRelease(id: string, stageId: string, object: ReleaseStage) {
-	const Collection: Collection = db.collection('features');
+async function updateRelease(
+	id: string,
+	stageId: string,
+	object: ReleaseStage,
+	collection: string
+) {
+	const Collection: Collection = db.collection(collection);
 
 	try {
 		const response = await Collection.updateOne(

@@ -1,35 +1,34 @@
 <script lang="ts">
 	import '../../styles/form.css';
 	import { enhance } from '$app/forms';
-	import type { Feature, FeatureValidations } from '../types';
+	import type { JIRAForm, JIRATicketValidations } from '../types';
 	import { formatDateInputValue } from '$lib/utils/formatDateInputValue';
 	import { onMount } from 'svelte';
-	import { fetchFeature } from '../utils/fetchFeature';
-	import { updateList } from '$lib/Feature_Features/utils/stores/activeList';
-	import CoreCapabilitySelect from '$lib/components/CoreCapabilitySelect.svelte';
-	import JiraTicketSelect from '$lib/components/JIRATicketSelect.svelte';
+	import { fetchJiraById } from '../utils/fetchJiraById';
+	import { updateList } from '$lib/Feature_JiraTickets/utils/stores/activeList';
+	import MilestoneSelect from './MilestoneSelect.svelte';
 
 	let { id = undefined } = $props();
 
-	let action = $state('/?/post-new-feature');
+	let action = $state('/?/post-new-jira-ticket');
 	let processing = $state(false);
-	let alerts: FeatureValidations = $state({});
-	let formData: Feature = $state({}) as Feature;
+	let alerts: JIRATicketValidations = $state({});
+	let formData: JIRAForm = $state({}) as JIRAForm;
 	let success: boolean = $state(false);
 
 	onMount(async () => {
 		if (id) {
-			action = '/?/edit-feature';
-			formData = await fetchFeature(id);
+			action = '/?/edit-jira-ticket';
+			formData = await fetchJiraById(id);
 		}
 	});
 
 	$effect(() => {
-		if (!id) formData = {} as Feature;
+		if (!id) formData = {} as JIRAForm;
 	});
 
 	$effect(() => {
-		if (success && action == '/?/post-new-feature') formData = {} as Feature;
+		if (success && action == '/?/post-new-jira-ticket') formData = {} as JIRAForm;
 	});
 </script>
 
@@ -44,8 +43,8 @@
 				processing = false;
 
 				if (result.type == 'failure') {
-					alerts = result?.data?.result as FeatureValidations;
-					formData = result?.data?.data as Feature;
+					alerts = result?.data?.result as JIRATicketValidations;
+					formData = result?.data?.data as JIRAForm;
 				}
 				if (result.type == 'success') {
 					success = true;
@@ -65,7 +64,7 @@
 
 		<label for="details"
 			>Details: <small class="error" class:active-alert={alerts?.missingDetails}
-				>Include short description of the Milestone.</small
+				>Include short description of the JIRA Ticket.</small
 			></label
 		>
 		<textarea name="details" value={formData?.details || null}></textarea>
@@ -79,11 +78,17 @@
 		<input type="date" name="startDate" value={formatDateInputValue(formData?.startDate) || null} />
 
 		<label for="priority"
-			>Priority: <small class="error" class:active-alert={alerts?.missingPriority}
+			>Priority: <small class="error" class:active-alert={alerts?.invalidPriority}
 				>Priority is required.</small
 			></label
 		>
 		<input type="number" name="priority" value={formData?.priority || null} />
+
+		<label for="opr"
+			>OPR:
+			<small class="error" class:active-alert={alerts?.invalidOPR}>OPR is required.</small>
+		</label>
+		<input type="text" name="opr" value={formData?.opr || null} />
 
 		<label for="plannedReleaseDate"
 			>Planned Release Date:
@@ -97,14 +102,9 @@
 			value={formatDateInputValue(formData?.plannedReleaseDate) || null}
 		/>
 
-		<CoreCapabilitySelect editItem={formData || null} />
-		<small class="error" class:active-alert={alerts?.invalidCoreCapability}
-			>Core capability is required.</small
-		>
-
-		<JiraTicketSelect editItem={formData || null} />
-		<small class="error" class:active-alert={alerts?.invalidAssociatedJiraTickets}
-			>Something was wrong with your JIRA Ticket Selections.</small
+		<MilestoneSelect editItem={formData || null} />
+		<small class="error" class:active-alert={alerts?.invalidMilestones}
+			>Something is wrong with your milestone list.</small
 		>
 
 		<small class="error" class:active-alert={alerts?.dbFail}

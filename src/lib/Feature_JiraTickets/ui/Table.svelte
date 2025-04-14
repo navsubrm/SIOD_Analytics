@@ -1,15 +1,21 @@
 <script lang="ts">
-	import DisplayAssocJiraTicketsButton from './DisplayAssocJIRATicketsButton.svelte';
+	import { onMount } from 'svelte';
+
+	//JIRA List Store
+	import { activeList, updateList } from '$lib/Feature_JiraTickets/utils/stores/activeList';
+
+	//JIRA Imports:
+	import DisplayAssocMilestonesButton from './DisplayAssocMIlestonesButton.svelte';
 	import DescriptionButton from './DescriptionButton.svelte';
 	import AddEditButton from './AddEditButton.svelte';
 	import DeleteButton from './DeleteButton.svelte';
-	import { activeList, updateList } from '$lib/Feature_Features/utils/stores/activeList';
-	import { onMount } from 'svelte';
+
+	//Use Release stage imports:
 	import type { ReleaseStage } from '$lib/Feature_Releases/types';
 	import DisplayReleaseStages from '../../Feature_Releases/ui/DisplayReleaseStages.svelte';
 
 	async function updateFeature() {
-		const response = await fetch('/api/features/get-feature-list');
+		const response = await fetch('/api/jira-tickets/get-jira-ticket-list');
 		const data = await response.json();
 		$activeList = data;
 		$updateList = false;
@@ -21,6 +27,7 @@
 		return sorted[0];
 	}
 
+	//Update List from other features with update list store.
 	$effect(() => {
 		$updateList;
 		setTimeout(async () => await updateFeature(), 200);
@@ -35,10 +42,10 @@
 			<th>Name</th>
 			<th>Start Date</th>
 			<th>Planned Release</th>
-			<th>Core Capability</th>
 			<th>Priority</th>
-			<th>Tickets</th>
-			<th colspan="2">Current Release Stage</th>
+			<th>OPR</th>
+			<th>Milestones</th>
+			<th colspan="2">Current Release</th>
 			<th class="center">Details</th>
 			<th class="center">Edit</th>
 			<th class="center">Delete</th>
@@ -50,23 +57,17 @@
 				<td>{item?.name}</td>
 				<td>{new Date(item?.startDate).toLocaleDateString()}</td>
 				<td class="center">{new Date(item?.plannedReleaseDate).toLocaleDateString()}</td>
-				<td>{item?.coreCapability}</td>
 				<td class="center">{item?.priority}</td>
+				<td>{item?.opr}</td>
 				<td class="center">
-					{#if item?.associatedJiraTickets.length > 0}
-						<DisplayAssocJiraTicketsButton {item} />
+					{#if item?.milestones.length > 0}
+						<DisplayAssocMilestonesButton {item} />
 					{:else}
 						"None"
 					{/if}
 				</td>
-				<td class="center"
-					>{#if item?.associatedJiraTickets.length > 0}
-						{getCurrentRelease(item).stage}
-					{:else}
-						"None"
-					{/if}</td
-				>
-				<td class="center"><DisplayReleaseStages {item} collection={'features'} /></td>
+				<td class="center">{getCurrentRelease(item).stage}</td>
+				<td class="center"><DisplayReleaseStages {item} collection={'jira-tickets'} /></td>
 				<td class="center"><DescriptionButton {item} /></td>
 				<td class="center"><AddEditButton {item} edit={true} /></td>
 				<td class="center"><DeleteButton {item} /></td>
