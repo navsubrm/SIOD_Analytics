@@ -1,23 +1,21 @@
 <script lang="ts">
 	import Select from 'svelte-select';
 	import FormStyles from './FormStyles.svelte';
-	import { coreCapability } from '$lib/stores/coreCapability';
+	import { coreCapability } from '$lib/stores/coreCapabilityOptions';
 
 	let { editItem } = $props();
-
-	let items = $state();
 </script>
 
 <FormStyles Children={selectInput} />
 
 {#snippet selectInput()}
-	<label for="core-capability">Associated Core Capability: </label>
+	<label for="coreCapability">Associated Core Capability: </label>
 
 	<div class="select-style">
 		<Select
 			showChevron
-			items={$coreCapability}
-			name="core-capability"
+			items={[...$coreCapability]}
+			name="coreCapability"
 			value={editItem?.coreCapability || null}
 			required
 			--list-z-index="100000"

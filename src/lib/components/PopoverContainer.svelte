@@ -24,8 +24,8 @@
 			{
 				'--_cone-width': '360deg',
 				ease: 'ease-in-out',
-				duration: 0.75,
-				delay: 1.5
+				duration: 0.5,
+				delay: 0.5
 			}
 		);
 	});
@@ -35,7 +35,7 @@
 	<div class="popover-inner">
 		<div class="close-icon">
 			<button onclick={closePopover}>
-				<Close --_height="30px" --_fill={iconColor} />
+				Close <Close --_height="25px" --_fill={iconColor} />
 			</button>
 		</div>
 		<div class="content">
@@ -48,8 +48,9 @@
 
 <style>
 	.popover {
+		--_line-padding: 2px;
 		position: fixed;
-		padding: 2px;
+		padding: var(--_line-padding);
 		opacity: 0;
 		border: none;
 		border-radius: 0.5em;
@@ -64,10 +65,12 @@
 		justify-content: center;
 		align-items: center;
 		opacity: 1;
+		width: max-content;
+		max-width: 100%;
 		transform: translateY(0);
 		background: conic-gradient(var(--orange) var(--_cone-width), transparent var(--_cone-width));
 		transition:
-			opacity 0.5s,
+			opacity 0.5s 0.25s,
 			transform 0.5s allow-discrete;
 
 		@starting-style {
@@ -79,12 +82,13 @@
 	.popover-inner {
 		position: relative;
 		background: var(--blue);
-		padding: 1em;
+		padding: 1.5em;
 		color: var(--white);
 		font-weight: bold;
 		border: none;
 		border-radius: 0.5em;
-		min-height: 400px;
+		height: max-content;
+		width: 100%;
 		min-width: 300px;
 	}
 
@@ -92,10 +96,11 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		height: 100%;
+		width: max-content;
+		max-width: 100%;
 		opacity: 1;
-		transition: opacity 0.5s 1.5s ease-in;
-		margin-top: 1em;
+		transition: opacity 0.5s 0.75s ease-in;
+		margin-top: 1.5em;
 
 		@starting-style {
 			opacity: 0;
@@ -115,10 +120,15 @@
 
 	.close-icon button {
 		position: absolute;
-		top: 5px;
-		right: 5px;
+		top: 3px;
+		right: 3px;
 		background: none;
 		border: none;
 		pointer-events: all;
+		color: var(--white);
+	}
+
+	.close-icon button:hover {
+		--_fill: var(--gold);
 	}
 </style>

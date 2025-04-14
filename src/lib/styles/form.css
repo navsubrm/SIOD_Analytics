@@ -1,0 +1,127 @@
+form {
+	display: flex;
+	flex-direction: column;
+	background: var(--blue);
+	padding-top: 0.5em;
+	padding-bottom: 0.25em;
+	padding-inline: 0.75em;
+	border-radius: 0.5em;
+	color: var(--white);
+	min-width: var(--_form-min-width, 300px);
+	max-width: var(--form-max-width, 600px);
+}
+
+.form-container h3 {
+	margin-bottom: 0.5em;
+	font-size: 1.5em;
+	text-align: center;
+}
+
+label {
+	font-size: 1em;
+	margin-bottom: 0.25em;
+}
+
+input,
+textarea {
+	margin-bottom: 0.5em;
+	padding: 0.25em;
+	font-size: 0.8em;
+	background: none;
+	border: none;
+	color: var(--white);
+	border-bottom: solid 1px var(--gold);
+}
+
+textarea {
+	height: max-content;
+	width: 100%;
+	max-width: 100%;
+}
+
+input[type='text']:hover,
+input[type='text']:focus,
+input[type='text']:focus-within,
+input[type='password']:hover,
+input[type='password']:focus,
+input [type='password']:focus-within {
+	outline: none;
+	color: var(--white);
+	border: solid 1px color-mix(in lab, var(--gold), transparent 30%);
+	background: color-mix(in lab, var(--white), transparent 90%);
+}
+
+input[type='submit'] {
+	background: var(--gold);
+	margin-top: 0.75em;
+	padding-block: 0.25em;
+	font-size: 1.25em;
+	color: var(--white);
+	border: solid 1px var(--white);
+}
+
+input[type='submit']:hover {
+	background: var(--blue);
+	color: var(--gold);
+	border: solid 1px var(--gold);
+}
+
+.processing {
+	opacity: 0.5;
+	pointer-events: none;
+}
+
+.select-style {
+	--background: transparent;
+	--border: none;
+	--border-focused: solid 1px var(--gold);
+	--border-hover: solid 1px var(--gold);
+	--padding: 0;
+	--border-radius: 0;
+	--box-sizing: border-box;
+	--chevron-color: var(--gold);
+	--chevron-width: 30px;
+	--clear-icon-color: var(--gold);
+	--font-size: inherit;
+	--item-padding: 5px;
+	--internal-padding: 5px;
+	--input-margin: 0;
+	--input-color: var(--blue);
+	--item-color: var(--blue);
+	--item-hover-bg: var(--gold);
+	--item-hover-color: var(--white);
+	--item-is-active-bg: var(--gold);
+	--item-active-background: var(--blue);
+	--list-background: color-mix(in lab, var(--white), transparent 2%);
+	--placeholder-color: color-mix(in lab, var(--white), transparent 10%);
+}
+
+.select-style :global(.svelte-select-list) {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.error,
+.success {
+	font-size: 0.8em;
+	margin-left: 10px;
+	display: none;
+	opacity: 0;
+}
+
+.error {
+	color: var(--red);
+}
+
+.success {
+	color: var(--green);
+}
+
+.active-alert {
+	display: inline-block;
+	opacity: 1;
+	transition: all 0.5s allow-discrete;
+
+	@starting-style {
+		opacity: 0;
+	}
+}

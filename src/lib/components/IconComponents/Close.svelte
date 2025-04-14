@@ -38,4 +38,8 @@
 	svg path {
 		fill: var(--_fill, var(--gold));
 	}
+
+	svg:hover path {
+		fill: var(--_hover-fill, var(--gold));
+	}
 </style>

@@ -85,12 +85,12 @@
 	display: block;
 }
 
-.error {
+/* .error {
 	color: var(--red);
 	font-size: 0.9em;
 	margin-bottom: 0.5em;
 	display: block;
-}
+} */
 
 /* @media (prefers-color-scheme: dark) {
 	:root {

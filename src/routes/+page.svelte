@@ -1,21 +1,14 @@
 <script lang="ts">
+	import '$lib/styles/form.css';
 	import { page } from '$app/state';
-	import { goto } from '$app/navigation';
-	import TrackingItemCardList from '$lib/TrackingItem/ui/CardListComponents/TrackingItemCardList.svelte';
-	import AnalyticsBoard from '$lib/components/IconComponents/AnalyticsBoard.svelte';
-	import TrackingItemTable from '$lib/TrackingItem/ui/TableListComponents/TrackingItemTable.svelte';
-	import Toggle from '$lib/components/IconComponents/Toggle.svelte';
-	import AddNewTrackingItemButton from '$lib/TrackingItem/ui/AddNewTrackingItemButton.svelte';
-	import type { PageProps } from './$types';
+	//import PostMilestoneForm from '$lib/Feature_Milestones/ui/PostMilestoneForm.svelte';
+	import DisplayFeatureTableButton from '$lib/Feature_Features/ui/DisplayTableButton.svelte';
+	import MilestoneSelect from '$lib/Feature_Milestones/ui/MilestoneSelect.svelte';
+	import DisplayMilestoneTableButton from '$lib/Feature_Milestones/ui/DisplayMilestoneTableButton.svelte';
+	import PostForm from '$lib/Feature_Releases/ui/PostForm.svelte';
+	//import FeatureTable from '$lib/Feature_Features/ui/Table.svelte';
 
-	let { data }: PageProps = $props();
-	let trackingItemList = data.trackingItemList;
-
-	let viewTable: boolean = $state(true);
-
-	function goToAnalytics() {
-		goto('/analytics');
-	}
+	let value: string | undefined = $state();
 </script>
 
 <svelte:head>
@@ -25,27 +18,18 @@
 </svelte:head>
 
 <section>
-	<div class="data-container">
-		<h3>Active Tracking Items:</h3>
-		<div>
-			<AddNewTrackingItemButton actionUrl={'?/add-new-trackingItem'} />
-			<button onclick={goToAnalytics}><AnalyticsBoard /></button>
-			<button onclick={() => (viewTable = !viewTable)}>
-				<Toggle bind:active={viewTable} />
-			</button>
-		</div>
+	<h3>Actions:</h3>
+	<span>
+		<DisplayMilestoneTableButton />
+	</span>
+	<div>
+		<DisplayFeatureTableButton />
 	</div>
-	{#key viewTable}
-		{#if viewTable}
-			<TrackingItemTable {trackingItemList} />
-		{:else}
-			<TrackingItemCardList {trackingItemList} />
-		{/if}
-	{/key}
 </section>
 
 <style>
 	section {
+		padding: 3em;
 		background: var(--white);
 		width: 100%;
 	}
