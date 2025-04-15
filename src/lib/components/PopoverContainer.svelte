@@ -118,10 +118,12 @@
 		align-items: center;
 		width: max-content;
 		max-width: 100%;
+		max-height: 80vh;
 		padding: 1.5em;
 		opacity: 1;
 		transition: opacity 0.5s 0.75s ease-in;
 		margin-top: 1.5em;
+		overflow-y: auto;
 
 		@starting-style {
 			opacity: 0;
