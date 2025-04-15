@@ -39,10 +39,10 @@
 <table>
 	<thead>
 		<tr>
+			<th>Feature</th>
 			<th>Name</th>
 			<th>Start Date</th>
 			<th>Planned Release</th>
-			<th>Priority</th>
 			<th>OPR</th>
 			<th>Milestones</th>
 			<th colspan="2">Current Release</th>
@@ -54,10 +54,10 @@
 	<tbody>
 		{#each $activeList as item}
 			<tr>
+				<td>{item?.feature?.label}</td>
 				<td>{item?.name}</td>
 				<td>{new Date(item?.startDate).toLocaleDateString()}</td>
 				<td class="center">{new Date(item?.plannedReleaseDate).toLocaleDateString()}</td>
-				<td class="center">{item?.priority}</td>
 				<td>{item?.opr}</td>
 				<td class="center">
 					{#if item?.milestones.length > 0}

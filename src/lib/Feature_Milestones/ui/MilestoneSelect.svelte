@@ -41,7 +41,7 @@
 					name="milestone"
 					{value}
 					required
-					--list-z-index="100000"
+					closeListOnChange={false}
 				/>
 			{/if}
 		</div>

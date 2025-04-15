@@ -9,7 +9,7 @@ function initializeFeatureObject(inputs: FeatureForm) {
 		priority: inputs.priority,
 		plannedReleaseDate: new Date(inputs?.plannedReleaseDate?.toString() as string),
 		coreCapability: JSON.parse(inputs.coreCapability.toString()).value,
-		associatedJiraTickets: [...JSON.parse(inputs?.associatedJiraTickets.toString())],
+		milestones: [],
 		createdAt: new Date()
 	};
 
@@ -54,6 +54,8 @@ function initializeFeatureObject(inputs: FeatureForm) {
 		];
 	}
 
+	if (inputs?.milestones.toString() !== '')
+		newFeature.milestones = [...JSON.parse(inputs?.milestones.toString())];
 	if (inputs?.id) newFeature.updatedAt = new Date();
 
 	return newFeature;

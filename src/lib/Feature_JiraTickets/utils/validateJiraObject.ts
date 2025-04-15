@@ -7,8 +7,8 @@ function validateJiraObject(
 	name: string,
 	details: string,
 	startDate: string,
+	feature: string,
 	plannedReleaseDate: string,
-	priority: string,
 	milestones: string,
 	OPR: string
 ) {
@@ -18,8 +18,10 @@ function validateJiraObject(
 	if (validateString(details)) validations.missingDetails = true;
 	if (validateDate(startDate)) validations.invalidStartDate = true;
 	if (validateDate(plannedReleaseDate)) validations.invalidPlannedReleaseDate = true;
-	if (!priority || isNaN(Number(priority))) validations.invalidPriority = true;
-	if (!isJSON(milestones)) validations.invalidMilestones = true;
+	if (!isJSON(feature)) validations.invalidFeature = true;
+	if (milestones !== '') {
+		if (!isJSON(milestones)) validations.invalidMilestones = true;
+	}
 	if (validateString(OPR)) validations.invalidOPR = true;
 
 	return validations;

@@ -56,6 +56,7 @@ export const jiraTickets = [
 // Global View	PI2 Global View- Object Display Panel, Longitude Add, Handle inconsistent geolocation data	KAH-3937	1/26/24 13:30	PI2	4/25/2024	4/22/24 9:09	Released to Dev
 // Spectra/EEM Browser	PI2 EEM Browser- Updates for blank spectra fields, live updates	KAH-3871	1/25/24 9:11	PI2	4/25/2024	5/3/24 0:20	Released to Dev
 // Alerts	Alerts Backlog- Updates Available Button, Alerts subtype, Reorg	KAH-4234	4/30/24 9:19	PI3	7/31/2024	8/1/24 0:00	Released to Dev
+
 // Alerts	PI3 Alerts- Revise alert description, collapsible alets	KAH-4249	5/2/24 12:28	PI3	7/31/2024	8/1/24 0:00	Released to Dev
 // Spectra/EEM Browser	PI3 EEM Browser- Performance issue, edge case of NATO disseminations	KAH-4248	5/2/24 12:13	PI3	7/31/2024	8/1/24 0:00	Released to Dev
 // Alerts	PI4 Alerts- display both ACK'ed and UNACK'ed alerts and Kratos progress on Integrating EMI summary information via UDL	KAH-4504	7/16/24 10:01	PI4	10/28/2024	11/4/24 14:40	Released to Dev

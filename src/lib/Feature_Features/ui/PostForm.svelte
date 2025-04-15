@@ -7,7 +7,7 @@
 	import { fetchFeature } from '../utils/fetchFeature';
 	import { updateList } from '$lib/Feature_Features/utils/stores/activeList';
 	import CoreCapabilitySelect from '$lib/components/CoreCapabilitySelect.svelte';
-	import JiraTicketSelect from '$lib/components/JIRATicketSelect.svelte';
+	import MilestoneSelect from '$lib/Feature_JiraTickets/ui/MilestoneSelect.svelte';
 
 	let { id = undefined } = $props();
 
@@ -102,9 +102,9 @@
 			>Core capability is required.</small
 		>
 
-		<JiraTicketSelect editItem={formData || null} />
-		<small class="error" class:active-alert={alerts?.invalidAssociatedJiraTickets}
-			>Something was wrong with your JIRA Ticket Selections.</small
+		<MilestoneSelect editItem={formData || null} />
+		<small class="error" class:active-alert={alerts?.invalidMilestones}
+			>Something was wrong with your milestone Selections.</small
 		>
 
 		<small class="error" class:active-alert={alerts?.dbFail}

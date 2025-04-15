@@ -1,13 +1,17 @@
 <script lang="ts">
 	import Select from 'svelte-select';
-	import FormStyles from '../../components/FormStyles.svelte';
+	import FormStyles from './FormStyles.svelte';
 	import { onMount } from 'svelte';
 
 	let { editItem } = $props();
 	let items = $state();
 
+	if (editItem == '') editItem = null;
+
+	$inspect('Edit Item from Feature Select: ', editItem);
+
 	async function getList() {
-		const res = await fetch('/api/milestone/get-milestone-select-list');
+		const res = await fetch('/api/features/get-feature-select-list');
 		if (!res.ok) return (items = []);
 		const data = await res.json();
 		items = data;
@@ -19,18 +23,11 @@
 <FormStyles Children={selectInput} />
 
 {#snippet selectInput()}
-	<label for="milestones">Associated Milestones: </label>
+	<label for="feature">Associated Feature: </label>
 
 	<div class="select-style">
 		{#if items}
-			<Select
-				multiple
-				{items}
-				showChevron
-				name="milestones"
-				value={editItem || null}
-				closeListOnChange={false}
-			/>
+			<Select {items} showChevron name="feature" required value={editItem?.feature || {}} />
 		{/if}
 	</div>
 {/snippet}

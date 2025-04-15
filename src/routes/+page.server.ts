@@ -88,6 +88,7 @@ export const actions = {
 	},
 	'edit-jira-ticket': async ({ request }) => {
 		const data: JIRAForm = Object.fromEntries(await request.formData());
+		console.log('Data from Jira Form: ', data);
 		const result = await handleUpdateJiraTicket(data);
 		if (result?.dbFail) return fail(500, { result, data });
 		if (!result.success) return fail(409, { result, data });

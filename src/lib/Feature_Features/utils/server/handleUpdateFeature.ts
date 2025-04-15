@@ -12,7 +12,7 @@ async function handleUpdateFeature(data: FeatureForm) {
 		Number(data?.priority?.toString()),
 		data?.plannedReleaseDate?.toString() as string,
 		data?.coreCapability,
-		data?.associatedJiraTickets
+		data?.milestones.toString()
 	);
 
 	if (!ObjectId.isValid(data.id as string)) return { success: false, dbFail: true };

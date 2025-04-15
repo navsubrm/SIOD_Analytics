@@ -11,7 +11,7 @@ async function handlePOSTNewFeature(data: FeatureForm) {
 		Number(data?.priority?.toString()),
 		data?.plannedReleaseDate?.toString() as string,
 		data?.coreCapability,
-		data?.associatedJiraTickets
+		data?.milestones.toString()
 	);
 
 	if (Object.keys(validations).length > 0) return { success: false, ...validations };

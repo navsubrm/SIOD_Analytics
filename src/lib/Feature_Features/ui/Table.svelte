@@ -1,4 +1,5 @@
 <script lang="ts">
+	import DisplayAssocMIlestonesButton from '$lib/Feature_JiraTickets/ui/DisplayAssocMIlestonesButton.svelte';
 	import DisplayAssocJiraTicketsButton from './DisplayAssocJIRATicketsButton.svelte';
 	import DescriptionButton from './DescriptionButton.svelte';
 	import AddEditButton from './AddEditButton.svelte';
@@ -37,7 +38,7 @@
 			<th>Planned Release</th>
 			<th>Core Capability</th>
 			<th>Priority</th>
-			<th>Tickets</th>
+			<th>Milestones</th>
 			<th colspan="2">Current Release Stage</th>
 			<th class="center">Details</th>
 			<th class="center">Edit</th>
@@ -53,14 +54,14 @@
 				<td>{item?.coreCapability}</td>
 				<td class="center">{item?.priority}</td>
 				<td class="center">
-					{#if item?.associatedJiraTickets.length > 0}
-						<DisplayAssocJiraTicketsButton {item} />
+					{#if item?.milestones?.length > 0}
+						<DisplayAssocMIlestonesButton {item} />
 					{:else}
 						"None"
 					{/if}
 				</td>
 				<td class="center"
-					>{#if item?.associatedJiraTickets.length > 0}
+					>{#if item?.milestones?.length > 0}
 						{getCurrentRelease(item).stage}
 					{:else}
 						"None"

@@ -6,10 +6,10 @@ function initializeJiraObject(inputs: JIRAForm) {
 		name: inputs.name,
 		details: inputs.details,
 		startDate: new Date(inputs?.startDate?.toString() as string),
-		priority: inputs?.priority,
+		feature: JSON.parse(inputs?.feature),
 		opr: inputs?.opr,
 		plannedReleaseDate: new Date(inputs?.plannedReleaseDate?.toString() as string),
-		milestones: [...JSON.parse(inputs?.milestones?.toString())],
+		milestones: [],
 		createdAt: new Date()
 	};
 
@@ -58,6 +58,9 @@ function initializeJiraObject(inputs: JIRAForm) {
 			}
 		];
 	}
+
+	if (inputs?.milestones.toString() !== '')
+		newJiraTicket.milestones = [...JSON.parse(inputs?.milestones?.toString())];
 
 	if (inputs?.id) newJiraTicket.updatedAt = new Date();
 

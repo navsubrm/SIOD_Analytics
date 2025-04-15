@@ -7,6 +7,7 @@
 	import { fetchJiraById } from '../utils/fetchJiraById';
 	import { updateList } from '$lib/Feature_JiraTickets/utils/stores/activeList';
 	import MilestoneSelect from './MilestoneSelect.svelte';
+	import FeatureSelect from '$lib/components/FeatureSelect.svelte';
 
 	let { id = undefined } = $props();
 
@@ -45,6 +46,8 @@
 				if (result.type == 'failure') {
 					alerts = result?.data?.result as JIRATicketValidations;
 					formData = result?.data?.data as JIRAForm;
+
+					console.log('Form Data response: ', formData);
 				}
 				if (result.type == 'success') {
 					success = true;
@@ -62,6 +65,12 @@
 		</label>
 		<input type="text" name="name" value={formData?.name || null} />
 
+		<FeatureSelect editItem={formData || null} />
+
+		<small class="error" class:active-alert={alerts?.invalidFeature}
+			>Feature is Required is required.</small
+		>
+
 		<label for="details"
 			>Details: <small class="error" class:active-alert={alerts?.missingDetails}
 				>Include short description of the JIRA Ticket.</small
@@ -77,19 +86,6 @@
 		</label>
 		<input type="date" name="startDate" value={formatDateInputValue(formData?.startDate) || null} />
 
-		<label for="priority"
-			>Priority: <small class="error" class:active-alert={alerts?.invalidPriority}
-				>Priority is required.</small
-			></label
-		>
-		<input type="number" name="priority" value={formData?.priority || null} />
-
-		<label for="opr"
-			>OPR:
-			<small class="error" class:active-alert={alerts?.invalidOPR}>OPR is required.</small>
-		</label>
-		<input type="text" name="opr" value={formData?.opr || null} />
-
 		<label for="plannedReleaseDate"
 			>Planned Release Date:
 			<small class="error" class:active-alert={alerts?.invalidPlannedReleaseDate}
@@ -102,7 +98,13 @@
 			value={formatDateInputValue(formData?.plannedReleaseDate) || null}
 		/>
 
-		<MilestoneSelect editItem={formData || null} />
+		<label for="opr"
+			>OPR:
+			<small class="error" class:active-alert={alerts?.invalidOPR}>OPR is required.</small>
+		</label>
+		<input type="text" name="opr" value={formData?.opr || null} />
+
+		<MilestoneSelect editItem={formData?.milestones || null} />
 		<small class="error" class:active-alert={alerts?.invalidMilestones}
 			>Something is wrong with your milestone list.</small
 		>

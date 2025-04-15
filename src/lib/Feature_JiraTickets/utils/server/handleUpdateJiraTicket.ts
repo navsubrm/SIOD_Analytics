@@ -9,8 +9,8 @@ async function handleUpdateJiraTicket(data: JIRAForm) {
 		data?.name,
 		data?.details as string,
 		data?.startDate?.toString() as string,
+		data?.feature?.toString(),
 		data?.plannedReleaseDate?.toString() as string,
-		data?.priority?.toString(),
 		data?.milestones.toString(),
 		data?.opr?.toString() as string
 	);

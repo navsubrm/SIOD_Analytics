@@ -5,12 +5,14 @@ const db: Db = await mongoInit();
 
 async function getObjectList(
 	collectionName: string,
-	options: MongoOptions | undefined = undefined
+	options: MongoOptions | undefined = undefined,
+	sort: any | undefined = undefined
 ) {
 	const Collection: Collection = db.collection(collectionName);
 
 	try {
 		const response = await Collection.find({}, { ...options })
+			.sort({ ...sort })
 			.map(({ _id, ...d }) => ({ _id: _id.toString(), ...d }))
 			.toArray();
 

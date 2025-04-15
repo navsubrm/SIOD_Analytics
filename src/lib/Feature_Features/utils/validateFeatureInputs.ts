@@ -10,7 +10,7 @@ function validateFeatureInputs(
 	priority: number,
 	plannedReleaseDate: string,
 	coreCapability: string,
-	associatedJiraTickets: string
+	milestones: string
 	//releaseStages: ReleaseStage[]
 ) {
 	const validations: FeatureValidations = {};
@@ -22,7 +22,9 @@ function validateFeatureInputs(
 	if (plannedReleaseDate && validateDate(plannedReleaseDate))
 		validations.invalidPlannedReleaseDate = true;
 	if (!isJSON(coreCapability)) validations.invalidCoreCapability = true;
-	if (!isJSON(associatedJiraTickets)) validations.invalidAssociatedJiraTickets = true;
+	if (milestones !== '') {
+		if (!isJSON(milestones)) validations.invalidMilestones = true;
+	}
 
 	return validations;
 }

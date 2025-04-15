@@ -8,8 +8,8 @@ async function handlePOSTNewJiraTicket(data: JIRAForm) {
 		data?.name,
 		data?.details as string,
 		data?.startDate?.toString() as string,
+		data?.feature?.toString(),
 		data?.plannedReleaseDate?.toString() as string,
-		data?.priority?.toString(),
 		data?.milestones,
 		data?.opr?.toString() as string
 	);

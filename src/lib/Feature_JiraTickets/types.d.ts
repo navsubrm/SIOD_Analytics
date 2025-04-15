@@ -2,8 +2,8 @@ interface JIRATicket {
 	_id?: string;
 	name?: string; //Use JIRA Ticket ID
 	startDate?: Date;
+	feature?: string;
 	plannedReleaseDate?: Date;
-	priority?: string;
 	opr?: string;
 	milestones?: string[];
 	details: string;
@@ -17,8 +17,8 @@ interface JIRATicketValidations {
 	missingName?: boolean;
 	missingDetails?: boolean;
 	invalidStartDate?: boolean;
+	invalidFeature?: boolean;
 	invalidPlannedReleaseDate?: boolean;
-	invalidPriority?: boolean;
 	invalidMilestones?: boolean;
 	invalidOPR?: boolean;
 	dbFail?: boolean;
@@ -28,8 +28,8 @@ interface JIRAForm extends FormDataEntryValue {
 	id?: string;
 	name: string;
 	startDate: string;
+	feature: string;
 	plannedReleaseDate: string;
-	priority: string;
 	opr?: string;
 	milestones: string;
 	details: string;

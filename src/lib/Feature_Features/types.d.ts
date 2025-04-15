@@ -6,7 +6,7 @@ interface Feature {
 	priority?: string;
 	plannedReleaseDate?: Date;
 	coreCapability: string;
-	associatedJiraTickets: string[];
+	milestones: string[];
 	releaseStages?: ReleaseStage[];
 	createdAt: Date;
 	updatedAt?: Date;
@@ -19,7 +19,7 @@ interface FeatureValidations {
 	missingPriority?: boolean;
 	invalidPlannedReleaseDate?: boolean;
 	invalidCoreCapability?: boolean;
-	invalidAssociatedJiraTickets?: boolean;
+	invalidMilestones?: boolean;
 	dbFail?: boolean;
 }
 
@@ -31,7 +31,7 @@ interface FeatureForm extends FormDataEntryValue {
 	priority?: string;
 	plannedReleaseDate?: Date;
 	coreCapability: string;
-	associatedJiraTickets: string[];
+	milestones: string[];
 	releaseStages: ReleaseStage[];
 }
 

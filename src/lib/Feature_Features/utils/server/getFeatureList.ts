@@ -2,7 +2,7 @@ import { getObjectList } from '$lib/server/getObjectList';
 
 async function getFeatureList() {
 	try {
-		const list = await getObjectList('features');
+		const list = await getObjectList('features', {}, { name: 1 });
 
 		if (list) return list;
 		return [];
