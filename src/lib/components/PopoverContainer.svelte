@@ -118,7 +118,7 @@
 		align-items: center;
 		width: max-content;
 		max-width: 100%;
-		max-height: 80vh;
+		max-height: 90%;
 		padding: 1.5em;
 		opacity: 1;
 		transition: opacity 0.5s 0.75s ease-in;
