@@ -65,6 +65,7 @@
 	</div>
 </div>
 
+
 <style>
 	.popover {
 		--_line-padding: 2px;
@@ -82,12 +83,11 @@
 		margin: auto;
 		display: flex;
 		flex-direction: column;
-		justify-content: center;
-		align-items: center;
 		opacity: 1;
 		width: var(--_popover-width, max-content);
 		height: var(--_popover-width, max-content);
 		max-width: 100%;
+		max-height: 90vh;
 		transform: translateY(0);
 		background: conic-gradient(var(--orange) var(--_cone-width), transparent var(--_cone-width));
 		transition:
@@ -109,21 +109,25 @@
 		border-radius: 0.5em;
 		/* height: max-content; */
 		/* width: 100%; */
+		max-height: 100%;
 		min-width: 300px;
+		overflow-y: scroll;
+		scroll-bar-width: 0;
+	}
+
+	.popover-inner::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
 	}
 
 	.content {
 		display: flex;
-		justify-content: center;
-		align-items: center;
 		width: max-content;
 		max-width: 100%;
-		max-height: 90%;
+		height: calc(100% - 1.75em);
 		padding: 1.5em;
 		opacity: 1;
 		transition: opacity 0.5s 0.75s ease-in;
 		margin-top: 1.5em;
-		overflow-y: auto;
 
 		@starting-style {
 			opacity: 0;
@@ -135,7 +139,8 @@
 	}
 
 	.close-icon {
-		position: relative;
+		position: sticky;
+		top: 0;
 		background: none;
 		width: 100%;
 		z-index: 10000;
