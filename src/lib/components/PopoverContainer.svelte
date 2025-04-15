@@ -103,7 +103,6 @@
 	.popover-inner {
 		position: relative;
 		background: var(--blue);
-		padding: 1.5em;
 		color: var(--white);
 		font-weight: bold;
 		border: none;
@@ -119,6 +118,7 @@
 		align-items: center;
 		width: max-content;
 		max-width: 100%;
+		padding: 1.5em;
 		opacity: 1;
 		transition: opacity 0.5s 0.75s ease-in;
 		margin-top: 1.5em;
