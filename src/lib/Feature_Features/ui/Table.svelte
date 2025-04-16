@@ -18,8 +18,8 @@
 
 	function getCurrentRelease(item) {
 		const released = item?.releaseStages.filter((el: ReleaseStage) => el.date !== null);
-		const sorted = released.sort((a: ReleaseStage, b: ReleaseStage) => a.date < b.date);
-		return sorted[0];
+		//const sorted = released.sort((a: ReleaseStage, b: ReleaseStage) => a.date < b.date);
+		return released[released.length - 1];
 	}
 
 	$effect(() => {
