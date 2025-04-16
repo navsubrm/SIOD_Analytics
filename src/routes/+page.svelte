@@ -108,6 +108,7 @@
 		align-items: center;
 		gap: 20px;
 		padding: 0.5em;
+		height: 5vh;
 		background: color-mix(in lab, var(--white), var(--blue) 20%);
 		width: 100%;
 	}
@@ -120,7 +121,7 @@
 
 	.analytics-section {
 		background-color: var(--blue);
-		min-height: 100vh;
+		height: 95vh;
 	}
 
 	.flex-row {
