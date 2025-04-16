@@ -63,7 +63,7 @@
 					{#if item?.milestones.length > 0}
 						<DisplayAssocMilestonesButton {item} />
 					{:else}
-						"None"
+						{item?.milestones.label}
 					{/if}
 				</td>
 				<td class="center">{getCurrentRelease(item).stage}</td>

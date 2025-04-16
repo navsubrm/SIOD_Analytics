@@ -9,7 +9,7 @@ function initializeJiraObject(inputs: JIRAForm) {
 		feature: JSON.parse(inputs?.feature),
 		opr: inputs?.opr,
 		plannedReleaseDate: new Date(inputs?.plannedReleaseDate?.toString() as string),
-		milestones: [],
+		milestones: JSON.parse(inputs?.milestones?.toString()),
 		createdAt: new Date()
 	};
 
@@ -17,14 +17,14 @@ function initializeJiraObject(inputs: JIRAForm) {
 		newJiraTicket.releaseStages = [
 			{
 				_id: new ObjectId().toString(),
-				stage: 'Customer Requirements',
-				date: new Date(),
+				stage: `Cust. Req's`,
+				date: new Date(inputs?.startDate),
 				projectedTime: 0.25,
 				updatedAt: null
 			},
 			{
 				_id: new ObjectId().toString(),
-				stage: 'Story Boarding',
+				stage: 'Dev Start',
 				date: null,
 				projectedTime: 0.2,
 				updatedAt: null
@@ -38,29 +38,20 @@ function initializeJiraObject(inputs: JIRAForm) {
 			},
 			{
 				_id: new ObjectId().toString(),
-				stage: 'In Testing',
+				stage: 'Rel to Dev',
 				date: null,
 				projectedTime: 0.15,
 				updatedAt: null
 			},
 			{
 				_id: new ObjectId().toString(),
-				stage: 'User Accepted',
+				stage: 'Rel to IL6',
 				date: null,
 				projectedTime: 0.05,
-				updatedAt: null
-			},
-			{
-				_id: new ObjectId().toString(),
-				stage: 'Closed',
-				date: null,
 				updatedAt: null
 			}
 		];
 	}
-
-	if (inputs?.milestones.toString() !== '')
-		newJiraTicket.milestones = [...JSON.parse(inputs?.milestones?.toString())];
 
 	if (inputs?.id) newJiraTicket.updatedAt = new Date();
 

@@ -3,6 +3,7 @@ interface ReleaseStage {
 	stage?: string;
 	date: Date | null;
 	projectedTime?: number | undefined;
+	createdAt?: Date | null;
 	updatedAt?: Date | null;
 }
 
@@ -15,6 +16,7 @@ interface ReleaseStageValidations {
 
 interface ReleaseForm extends FormDataEntryValue {
 	id?: string;
+	stage?: string;
 	stageId: string;
 	date: string | null;
 	projectedTime?: string;

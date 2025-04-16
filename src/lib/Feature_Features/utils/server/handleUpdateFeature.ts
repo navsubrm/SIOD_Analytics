@@ -8,11 +8,7 @@ async function handleUpdateFeature(data: FeatureForm) {
 	const validations = validateFeatureInputs(
 		data?.name,
 		data?.details as string,
-		data?.startDate?.toString() as string,
-		Number(data?.priority?.toString()),
-		data?.plannedReleaseDate?.toString() as string,
-		data?.coreCapability,
-		data?.milestones.toString()
+		data?.coreCapability
 	);
 
 	if (!ObjectId.isValid(data.id as string)) return { success: false, dbFail: true };

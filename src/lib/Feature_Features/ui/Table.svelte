@@ -1,8 +1,6 @@
 <script lang="ts">
-	import DisplayAssocMIlestonesButton from '$lib/Feature_JiraTickets/ui/DisplayAssocMIlestonesButton.svelte';
-	import DisplayAssocJiraTicketsButton from './DisplayAssocJIRATicketsButton.svelte';
 	import DescriptionButton from './DescriptionButton.svelte';
-	import AddEditButton from './AddEditButton.svelte';
+	import AddEditButton from './AddButton.svelte';
 	import DeleteButton from './DeleteButton.svelte';
 	import { activeList, updateList } from '$lib/Feature_Features/utils/stores/activeList';
 	import { onMount } from 'svelte';
@@ -18,8 +16,7 @@
 
 	function getCurrentRelease(item) {
 		const released = item?.releaseStages.filter((el: ReleaseStage) => el.date !== null);
-		//const sorted = released.sort((a: ReleaseStage, b: ReleaseStage) => a.date < b.date);
-		return released[released.length - 1];
+		return released[released.length - 1].stage;
 	}
 
 	$effect(() => {
@@ -34,12 +31,8 @@
 	<thead>
 		<tr>
 			<th>Name</th>
-			<th>Start Date</th>
-			<th>Planned Release</th>
 			<th>Core Capability</th>
-			<th>Priority</th>
-			<th>Milestones</th>
-			<th colspan="2">Current Release Stage</th>
+			<th class="center" colspan="2">Release Stage</th>
 			<th class="center">Details</th>
 			<th class="center">Edit</th>
 			<th class="center">Delete</th>
@@ -49,24 +42,8 @@
 		{#each $activeList as item}
 			<tr>
 				<td>{item?.name}</td>
-				<td>{new Date(item?.startDate).toLocaleDateString()}</td>
-				<td class="center">{new Date(item?.plannedReleaseDate).toLocaleDateString()}</td>
 				<td>{item?.coreCapability}</td>
-				<td class="center">{item?.priority}</td>
-				<td class="center">
-					{#if item?.milestones?.length > 0}
-						<DisplayAssocMIlestonesButton {item} />
-					{:else}
-						"None"
-					{/if}
-				</td>
-				<td class="center"
-					>{#if item?.milestones?.length > 0}
-						{getCurrentRelease(item).stage}
-					{:else}
-						"None"
-					{/if}</td
-				>
+				<td>{getCurrentRelease(item)}</td>
 				<td class="center"><DisplayReleaseStages {item} collection={'features'} /></td>
 				<td class="center"><DescriptionButton {item} /></td>
 				<td class="center"><AddEditButton {item} edit={true} /></td>

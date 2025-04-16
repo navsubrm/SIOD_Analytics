@@ -5,11 +5,7 @@ function initializeFeatureObject(inputs: FeatureForm) {
 	const newFeature: Feature = {
 		name: inputs.name,
 		details: inputs.details,
-		startDate: new Date(inputs?.startDate?.toString() as string),
-		priority: inputs.priority,
-		plannedReleaseDate: new Date(inputs?.plannedReleaseDate?.toString() as string),
 		coreCapability: JSON.parse(inputs.coreCapability.toString()).value,
-		milestones: [],
 		createdAt: new Date()
 	};
 
@@ -17,45 +13,13 @@ function initializeFeatureObject(inputs: FeatureForm) {
 		newFeature.releaseStages = [
 			{
 				_id: new ObjectId().toString(),
-				stage: 'In Dev',
+				stage: 'Day 0',
 				date: new Date(),
-				updatedAt: null
-			},
-			{
-				_id: new ObjectId().toString(),
-				stage: 'Released to Dev',
-				date: null,
-				updatedAt: null
-			},
-			{
-				_id: new ObjectId().toString(),
-				stage: 'Released to IL4',
-				date: null,
-				updatedAt: null
-			},
-			{
-				_id: new ObjectId().toString(),
-				stage: 'Released to IL6',
-				date: null,
-				updatedAt: null
-			},
-			{
-				_id: new ObjectId().toString(),
-				stage: 'User Accepted',
-				date: null,
-				updatedAt: null
-			},
-			{
-				_id: new ObjectId().toString(),
-				stage: 'OA approved',
-				date: null,
 				updatedAt: null
 			}
 		];
 	}
 
-	if (inputs?.milestones.toString() !== '')
-		newFeature.milestones = [...JSON.parse(inputs?.milestones.toString())];
 	if (inputs?.id) newFeature.updatedAt = new Date();
 
 	return newFeature;

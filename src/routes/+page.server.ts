@@ -9,6 +9,7 @@ import { getMilestoneList } from '$lib/Feature_Milestones/utils/server/getMilest
 import { handlePOSTNewMilestone } from '$lib/Feature_Milestones/utils/server/handlePOSTNewMilestone';
 import { handlePOSTNewFeature } from '$lib/Feature_Features/utils/server/handlePOSTNewFeature';
 import { handlePOSTNewJiraTicket } from '$lib/Feature_JiraTickets/utils/server/handlePOSTNewJiraTicket';
+import { handlePOSTNewFeatureRelease } from '$lib/Feature_Features/utils/server/handlePostNewFeatureRelease';
 //Update:
 import { handleUpdateFeature } from '$lib/Feature_Features/utils/server/handleUpdateFeature';
 import { handleUpdateRelease } from '$lib/Feature_Releases/utils/server/handleUpdateRelease';
@@ -56,7 +57,17 @@ export const actions = {
 	},
 	'edit-feature': async ({ request }) => {
 		const data: FeatureForm = Object.fromEntries(await request.formData());
+
+		console.log(data);
+
 		const result = await handleUpdateFeature(data);
+		if (result?.dbFail) return fail(500, { result, data });
+		if (!result.success) return fail(409, { result, data });
+		return { success: true, data };
+	},
+	'post-new-feature-release': async ({ request }) => {
+		const data: ReleaseForm = Object.fromEntries(await request.formData());
+		const result = await handlePOSTNewFeatureRelease(data);
 		if (result?.dbFail) return fail(500, { result, data });
 		if (!result.success) return fail(409, { result, data });
 		return { success: true, data };

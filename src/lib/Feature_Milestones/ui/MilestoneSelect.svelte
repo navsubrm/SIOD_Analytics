@@ -39,7 +39,7 @@
 					showChevron
 					{items}
 					name="milestone"
-					{value}
+					value={value || null}
 					required
 					closeListOnChange={false}
 				/>

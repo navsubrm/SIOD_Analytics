@@ -2,12 +2,10 @@
 	import '../../styles/form.css';
 	import { enhance } from '$app/forms';
 	import type { Feature, FeatureValidations } from '../types';
-	import { formatDateInputValue } from '$lib/utils/formatDateInputValue';
 	import { onMount } from 'svelte';
 	import { fetchFeature } from '../utils/fetchFeature';
 	import { updateList } from '$lib/Feature_Features/utils/stores/activeList';
 	import CoreCapabilitySelect from '$lib/components/CoreCapabilitySelect.svelte';
-	import MilestoneSelect from '$lib/Feature_JiraTickets/ui/MilestoneSelect.svelte';
 
 	let { id = undefined } = $props();
 
@@ -70,41 +68,9 @@
 		>
 		<textarea name="details" value={formData?.details || null}></textarea>
 
-		<label for="startDate"
-			>StartDate:
-			<small class="error" class:active-alert={alerts?.invalidStartDate}
-				>Start Date is required.</small
-			>
-		</label>
-		<input type="date" name="startDate" value={formatDateInputValue(formData?.startDate) || null} />
-
-		<label for="priority"
-			>Priority: <small class="error" class:active-alert={alerts?.missingPriority}
-				>Priority is required.</small
-			></label
-		>
-		<input type="number" name="priority" value={formData?.priority || null} />
-
-		<label for="plannedReleaseDate"
-			>Planned Release Date:
-			<small class="error" class:active-alert={alerts?.invalidPlannedReleaseDate}
-				>Planned release date is required.</small
-			>
-		</label>
-		<input
-			type="date"
-			name="plannedReleaseDate"
-			value={formatDateInputValue(formData?.plannedReleaseDate) || null}
-		/>
-
 		<CoreCapabilitySelect editItem={formData || null} />
 		<small class="error" class:active-alert={alerts?.invalidCoreCapability}
 			>Core capability is required.</small
-		>
-
-		<MilestoneSelect editItem={formData || null} />
-		<small class="error" class:active-alert={alerts?.invalidMilestones}
-			>Something was wrong with your milestone Selections.</small
 		>
 
 		<small class="error" class:active-alert={alerts?.dbFail}

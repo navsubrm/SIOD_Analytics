@@ -24,7 +24,6 @@
 	<div class="select-style">
 		{#if items}
 			<Select
-				multiple
 				{items}
 				showChevron
 				name="milestones"

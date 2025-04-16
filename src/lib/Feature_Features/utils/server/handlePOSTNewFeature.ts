@@ -7,11 +7,11 @@ async function handlePOSTNewFeature(data: FeatureForm) {
 	const validations = validateFeatureInputs(
 		data?.name,
 		data?.details as string,
-		data?.startDate?.toString() as string,
-		Number(data?.priority?.toString()),
-		data?.plannedReleaseDate?.toString() as string,
-		data?.coreCapability,
-		data?.milestones.toString()
+		// data?.startDate?.toString() as string,
+		// Number(data?.priority?.toString()),
+		// data?.plannedReleaseDate?.toString() as string,
+		data?.coreCapability
+		//data?.milestones.toString()
 	);
 
 	if (Object.keys(validations).length > 0) return { success: false, ...validations };

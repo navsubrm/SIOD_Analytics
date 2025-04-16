@@ -3,7 +3,7 @@
 	import FolderOpen from '$lib/components/IconComponents/FolderOpen.svelte';
 	import type { SvelteComponent } from 'svelte';
 	import Table from './Table.svelte';
-	import AddEditButton from './AddEditButton.svelte';
+	import AddEditButton from './AddButton.svelte';
 
 	let popoverContainer: SvelteComponent | undefined = $state();
 

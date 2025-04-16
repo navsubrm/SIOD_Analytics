@@ -8,7 +8,7 @@
 
 	if (editItem == '') editItem = null;
 
-	$inspect('Edit Item from Feature Select: ', editItem);
+	//$inspect('Edit Item from Feature Select: ', editItem);
 
 	async function getList() {
 		const res = await fetch('/api/features/get-feature-select-list');
@@ -27,7 +27,7 @@
 
 	<div class="select-style">
 		{#if items}
-			<Select {items} showChevron name="feature" required value={editItem?.feature || {}} />
+			<Select {items} showChevron name="feature" required value={editItem?.feature || null} />
 		{/if}
 	</div>
 {/snippet}

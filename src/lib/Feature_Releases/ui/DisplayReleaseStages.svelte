@@ -4,6 +4,7 @@
 	import type { SvelteComponent } from 'svelte';
 	import EditButton from './EditButton.svelte';
 	import DeleteButton from './DeleteButton.svelte';
+	import AddReleaseStage from '$lib/Feature_Features/ui/AddReleaseStage.svelte';
 
 	let popoverContainer: SvelteComponent | undefined = $state();
 	let { item, collection } = $props();
@@ -23,7 +24,12 @@
 
 {#snippet popoverChild()}
 	<div>
-		<h3>Release Stages:</h3>
+		<span class="flex-center">
+			<h3>Release Stages:</h3>
+			{#if collection == 'features'}
+				<AddReleaseStage {item} />
+			{/if}
+		</span>
 		<table>
 			<thead>
 				<tr>
@@ -99,5 +105,11 @@
 
 	.green {
 		color: green;
+	}
+
+	.flex-center {
+		display: flex;
+		align-items: center;
+		gap: 10px;
 	}
 </style>
