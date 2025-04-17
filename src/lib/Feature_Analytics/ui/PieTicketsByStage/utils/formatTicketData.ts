@@ -17,10 +17,10 @@ function formatTicketByStageData(jiraList: JIRATicket[]) {
 		if (completed?.length < 1) {
 			categories['unk']++;
 		} else {
-			if (Object.hasOwn(categories, `${completed[completed.length - 1].stage}`)) {
-				categories[`${completed[completed.length - 1].stage}`]++;
+			if (Object.hasOwn(categories, completed[completed.length - 1].stage)) {
+				categories[completed[completed.length - 1].stage]++;
 			} else {
-				categories[`${completed[completed.length - 1].stage}`] = 1;
+				categories[completed[completed.length - 1].stage] = 1;
 			}
 		}
 	});
