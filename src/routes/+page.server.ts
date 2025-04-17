@@ -2,6 +2,7 @@ import { fail } from '@sveltejs/kit';
 
 //Load function imports:
 import { getJiraTicketList } from '$lib/Feature_JiraTickets/utils/getJiraTicketList';
+import { getFeatureList } from '$lib/Feature_Features/utils/server/getFeatureList';
 import { getMilestoneList } from '$lib/Feature_Milestones/utils/server/getMilestoneList';
 
 //Action function imports:
@@ -29,6 +30,7 @@ import type { JIRAForm } from '$lib/Feature_JiraTickets/types';
 export async function load() {
 	return {
 		jiraTickets: (await getJiraTicketList()) || [],
+		features: (await getFeatureList()) || [],
 		milestones: (await getMilestoneList()) || []
 	};
 }
@@ -57,9 +59,6 @@ export const actions = {
 	},
 	'edit-feature': async ({ request }) => {
 		const data: FeatureForm = Object.fromEntries(await request.formData());
-
-		console.log(data);
-
 		const result = await handleUpdateFeature(data);
 		if (result?.dbFail) return fail(500, { result, data });
 		if (!result.success) return fail(409, { result, data });
@@ -75,7 +74,6 @@ export const actions = {
 	'edit-release': async ({ request, url }) => {
 		const collection = url?.searchParams.get('collection');
 		const data: ReleaseForm = Object.fromEntries(await request.formData());
-		//console.log('Data from server: ', data);
 		const result = await handleUpdateRelease(data, collection);
 		if (result?.dbFail) return fail(500, { result, data });
 		if (!result.success) return fail(409, { result, data });
@@ -84,7 +82,6 @@ export const actions = {
 	'delete-release': async ({ request, url }) => {
 		const collection = url?.searchParams.get('collection');
 		const data: ReleaseForm = Object.fromEntries(await request.formData());
-		//console.log('Data from delete server: ', data);
 		const result = await handleDeleteRelease(data, collection);
 		if (result?.dbFail) return fail(500, { result, data });
 		if (!result.success) return fail(409, { result, data });
@@ -99,7 +96,6 @@ export const actions = {
 	},
 	'edit-jira-ticket': async ({ request }) => {
 		const data: JIRAForm = Object.fromEntries(await request.formData());
-		console.log('Data from Jira Form: ', data);
 		const result = await handleUpdateJiraTicket(data);
 		if (result?.dbFail) return fail(500, { result, data });
 		if (!result.success) return fail(409, { result, data });

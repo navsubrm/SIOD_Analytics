@@ -10,7 +10,5 @@ export async function GET() {
 		1
 	);
 
-	console.log('Next milestone return: ', nextMilestone);
-
 	return json(nextMilestone);
 }

@@ -1,8 +1,23 @@
 <script lang="ts">
 	import '@carbon/charts-svelte/styles.css';
+	import { activeList as jiraTicketActiveList } from '$lib/Feature_JiraTickets/utils/stores/activeList';
 	import { ComboChart } from '@carbon/charts-svelte';
 	import { getDaysBetweenDates } from '$lib/ChartsAndGraphs/utils/getDaysBetweenDates';
 	import { truncateToDecimalPlaces } from '$lib/ChartsAndGraphs/utils/truncateNumber';
+
+	/** 
+	 * I need to layout how the chart should look:
+
+		- Group items by Feature on left
+		- Bottom scale will hold stages
+
+		Ideas for calculations: 
+
+			- stacked horizontal graph with feature day release. bottom bar is day each OA occurred.
+			- Combo bar graph for ticket with linear line and stage line by date of stage.
+			- Completion pie graph that compares IL6 date against planned end for on-time completion.
+
+	*/
 
 	let { item } = $props();
 

@@ -9,11 +9,21 @@
 	export function showPopover() {
 		popoverOpen = true;
 		popover?.showPopover();
+		disableScroll();
 	}
 
 	function closePopover() {
 		popoverOpen = false;
+		enableScroll();
 		popover?.hidePopover();
+	}
+
+	function disableScroll() {
+		document.body.style.overflow = 'hidden';
+	}
+
+	function enableScroll() {
+		document.body.style.overflow = 'auto';
 	}
 
 	$effect(() => {

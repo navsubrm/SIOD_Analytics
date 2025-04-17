@@ -1,0 +1,10 @@
+div :global(.cds--chart-holder .chart-grid-backdrop) {
+	background: none;
+	fill: none;
+}
+
+div :global(*) {
+	--cds-text-primary: white;
+	--cds-text-secondary: white;
+	--cds-layer-02: white;
+}

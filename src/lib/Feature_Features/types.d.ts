@@ -3,7 +3,7 @@ interface Feature {
 	name: string;
 	details?: string;
 	coreCapability: string;
-	releaseStages?: ReleaseStage[];
+	releaseStages: ReleaseStage[];
 	createdAt: Date;
 	updatedAt?: Date;
 }

@@ -1,6 +1,9 @@
 <script lang="ts">
 	import '$lib/styles/form.css';
 	import { activeList as jiraTicketActiveList } from '$lib/Feature_JiraTickets/utils/stores/activeList.js';
+	import FormStyles from '$lib/components/FormStyles.svelte';
+	import type { JIRATicket } from '$lib/Feature_JiraTickets/types.js';
+
 	//Section One
 	import DisplayFeatureTableButton from '$lib/Feature_Features/ui/DisplayTableButton.svelte';
 	import DisplayMilestoneTableButton from '$lib/Feature_Milestones/ui/DisplayMilestoneTableButton.svelte';
@@ -8,25 +11,14 @@
 
 	//Section two
 	import DaysToNextMilestone from '$lib/Feature_Analytics/ui/Value_DaysToNextMilestone.svelte';
-	import PieTicketsByStage from '$lib/Feature_Analytics/ui/Pie_TicketsByStage.svelte';
-
-	// import SingleItemBarCompVersesDays from '$lib/ChartsAndGraphs/ui/Combo_Bar_Line_SingleItemBarCompVersesDays.svelte';
-	import FormStyles from '$lib/components/FormStyles.svelte';
-	import type { JIRATicket } from '$lib/Feature_JiraTickets/types.js';
-	// import PercentageOfItemsWAdjustedEnd from '$lib/ChartsAndGraphs/ui/Pie_PercentageOfItemsWAdjustedEnd.svelte';
-	// import PercentageOfItemsOpen from '$lib/ChartsAndGraphs/ui/Pie_PercentageOfItemsOpen.svelte';
-	// import OnTimeAheadBehind from '$lib/ChartsAndGraphs/ui/Pie_OnTimeAheadBehind.svelte';
-	// import CompletionByItemPriority from '$lib/ChartsAndGraphs/ui/Bar_CompletionByItemPriority.svelte';
-	// import AverageDelta from '$lib/ChartsAndGraphs/ui/Value_AverageDelta.svelte';
-	// import { getDaysBetweenDates } from '$lib/ChartsAndGraphs/utils/getDaysBetweenDates.js';
+	import PieTicketsByStage from '$lib/Feature_Analytics/ui/PieTicketsByStage/Pie_TicketsByStage.svelte';
+	import HorizontalStackedBarChart from '$lib/Feature_Analytics/ui/horizontalStackedBarChart/HorizontalStackedBarChart.svelte';
 
 	let { data } = $props();
 
 	$effect(() => {
 		if (data?.jiraTickets) jiraTicketActiveList.set(data.jiraTickets as JIRATicket[]);
 	});
-
-	$inspect(data);
 </script>
 
 <svelte:head>
@@ -73,6 +65,7 @@
 				</div>
 			{/snippet}
 			<div class="horizontal-chart">
+				<HorizontalStackedBarChart />
 				<!-- <h3>Displaying Completion vs. Timeline for: {item.name}</h3> -->
 				<!-- {#key item}
 					<SingleItemBarCompVersesDays {item} />
@@ -110,7 +103,6 @@
 		width: 100%;
 	}
 
-	.header-main h3,
 	.header-main :global(button) {
 		color: var(--blue);
 		font-size: 0.9em;
@@ -118,7 +110,7 @@
 
 	.analytics-section {
 		background-color: var(--blue);
-		height: 95vh;
+		min-height: 95vh;
 	}
 
 	.flex-row {
