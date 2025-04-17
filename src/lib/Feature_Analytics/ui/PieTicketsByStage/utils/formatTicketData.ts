@@ -26,6 +26,7 @@ function formatTicketByStageData(jiraList: JIRATicket[]) {
 	});
 
 	Object.entries(categories).forEach((el) => {
+		console.log("From formatTicket Data: ", el, totalItems)
 		data = [...data, { group: el[0], value: calcAverage(totalItems, el[1] as number) }];
 	});
 
