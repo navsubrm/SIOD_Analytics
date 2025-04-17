@@ -11,9 +11,11 @@
 	});
 </script>
 
+{#key data}
 <div>
 	<BlankPieChart {data} {title} />
 </div>
+{/key}
 
 <style>
 	@import '../../styles/chart.css';
