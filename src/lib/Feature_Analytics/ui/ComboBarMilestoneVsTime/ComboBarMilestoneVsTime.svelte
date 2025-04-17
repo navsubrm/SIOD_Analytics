@@ -8,20 +8,20 @@
 	import { LineChart } from '@carbon/charts-svelte';
 	import type { JIRATicket } from '$lib/Feature_JiraTickets/types';
 	import { getDaysBetweenDates } from '$lib/Feature_Analytics/utils/getDaysBetweenDates';
-	import { onMount } from 'svelte';
+	//import { afterNavigate } from '$app/navigation';
+	//import { onMount } from 'svelte';
 
 	interface SelectItem {
 		label: string;
 		value: string;
 	}
 
-	let items = $state([]) as SelectItem[];
+	let items = $state(convertJiraListToSelectOptions()) as SelectItem[];
 	let displaySet = $state([]) as JIRATicket[];
-	let data = $state([]) as graphElement[];
+	let data = $state(handleDataConversion($activeList)) as graphElement[];
 
-	onMount(() => {
+	$effect(() => {
 		items = convertJiraListToSelectOptions();
-		data = handleDataConversion($activeList);
 	});
 
 	function convertJiraListToSelectOptions(): SelectItem[] {
@@ -34,11 +34,14 @@
 	}
 
 	function selectItemToDisplay(e) {
-		console.log('Event detail: ', e.detail);
 		displaySet = $activeList.filter((el) => {
 			if (e.detail.some((option: JIRATicket) => el._id == option.value)) return el;
 		});
 		data = handleDataConversion(displaySet);
+	}
+
+	function clearSelect() {
+		displaySet = [];
 	}
 
 	interface graphElement {
@@ -76,27 +79,28 @@
 	}
 </script>
 
-{#await items}
-	<p>Loading...</p>
-{:then items}
-	<FormStyles Children={TrackingItemSelect} />
-	{#snippet TrackingItemSelect()}
-		<div class="select-style">
-			<label for="select-tracking-item">Select Tracking Item to View: </label>
-			<Select
-				{items}
-				multiple
-				on:change={selectItemToDisplay}
-				on:clear={selectItemToDisplay}
-				closeListOnChange={false}
-			/>
-		</div>
-	{/snippet}
-{/await}
+<FormStyles Children={TrackingItemSelect} />
+{#snippet TrackingItemSelect()}
+	<div class="select-style">
+		<label for="select-tracking-item">Select Tracking Item to View: </label>
+		<Select
+			{items}
+			multiple
+			on:change={selectItemToDisplay}
+			on:clear={clearSelect}
+			closeListOnChange={false}
+		/>
+	</div>
+{/snippet}
+
 {#key displaySet}
 	<div class="horizontal-chart">
 		<h3>Displaying Milestone vs. Timeline for:</h3>
-		{#if displaySet.length > 0}
+		<small>Estimates based on: </small>
+		{#each projectionEstimates as stage}
+			<small>{stage?.stage}: {stage?.projectedTime * 100}%</small>
+		{/each}
+		<!-- {#if displaySet.length > 0}
 			({#each displaySet as item, i}
 				{#if i < displaySet.length - 1}
 					<small>{item?.name}, </small>
@@ -104,15 +108,11 @@
 					<small>{item?.name}</small>
 				{/if}
 			{/each})
-		{/if}
+		{/if} -->
 
 		{#key data}
 			<LineChart {data} {options} />
 		{/key}
-		<small>Estimates based on: </small>
-		{#each projectionEstimates as stage}
-			<small>{stage?.stage}: {stage?.projectedTime * 100}%</small>
-		{/each}
 	</div>
 {/key}
 
