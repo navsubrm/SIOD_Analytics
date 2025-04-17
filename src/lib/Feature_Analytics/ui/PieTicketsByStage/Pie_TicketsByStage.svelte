@@ -12,6 +12,7 @@
 </script>
 
 {#key data}
+{JSON.stringify(data)}
 <div>
 	<BlankPieChart {data} {title} />
 </div>
