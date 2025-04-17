@@ -3,7 +3,7 @@ interface JIRATicket {
 	name?: string; //Use JIRA Ticket ID
 	startDate?: Date;
 	feature?: string;
-	plannedReleaseDate?: Date;
+	plannedReleaseDate: Date;
 	opr?: string;
 	milestones?: string[];
 	details: string;

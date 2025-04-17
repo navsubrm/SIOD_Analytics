@@ -1,6 +1,9 @@
 <script lang="ts">
 	import '$lib/styles/form.css';
-	import { activeList as jiraTicketActiveList } from '$lib/Feature_JiraTickets/utils/stores/activeList.js';
+	import { activeList as jiraTicketActiveList } from '$lib/Feature_JiraTickets/utils/stores/activeList';
+	import { activeList as milestoneActiveList } from '$lib/Feature_Milestones/utils/stores/milestoneActiveList';
+	import { activeList as featuresActiveList } from '$lib/Feature_Features/utils/stores/activeList';
+	import Select from 'svelte-select';
 	import FormStyles from '$lib/components/FormStyles.svelte';
 	import type { JIRATicket } from '$lib/Feature_JiraTickets/types.js';
 
@@ -13,11 +16,14 @@
 	import DaysToNextMilestone from '$lib/Feature_Analytics/ui/Value_DaysToNextMilestone.svelte';
 	import PieTicketsByStage from '$lib/Feature_Analytics/ui/PieTicketsByStage/Pie_TicketsByStage.svelte';
 	import HorizontalStackedBarChart from '$lib/Feature_Analytics/ui/horizontalStackedBarChart/HorizontalStackedBarChart.svelte';
+	import ComboBarMilestoneVsTime from '$lib/Feature_Analytics/ui/ComboBarMilestoneVsTime/ComboBarMilestoneVsTime.svelte';
 
 	let { data } = $props();
 
 	$effect(() => {
 		if (data?.jiraTickets) jiraTicketActiveList.set(data.jiraTickets as JIRATicket[]);
+		if (data?.milestones) milestoneActiveList.set(data?.milestones);
+		if (data?.features) featuresActiveList.set(data?.features as Feature[]);
 	});
 </script>
 
@@ -45,7 +51,7 @@
 		<div class="flex-row">
 			<div class="details milestone">
 				<h4>Next Milestone:</h4>
-				<DaysToNextMilestone milestones={data?.milestones} />
+				<DaysToNextMilestone milestones={$milestoneActiveList} />
 			</div>
 			<div class="details delta-calc">
 				<h4>Average Delta:</h4>
@@ -57,23 +63,24 @@
 
 	<div class="grid-container">
 		<div class="time-completion-comparison">
-			<FormStyles Children={TrackingItemSelect} />
+			<ComboBarMilestoneVsTime />
+			<!-- <FormStyles Children={TrackingItemSelect} />
 			{#snippet TrackingItemSelect()}
 				<div class="select-style">
 					<label for="select-tracking-item">Select Tracking Item to View: </label>
-					<!-- <Select {items} on:change={selectItemToDisplay} /> -->
+					<Select items={jiraSelectItems} on:change={selectItemToDisplay} />
 				</div>
 			{/snippet}
 			<div class="horizontal-chart">
-				<HorizontalStackedBarChart />
-				<!-- <h3>Displaying Completion vs. Timeline for: {item.name}</h3> -->
-				<!-- {#key item}
+				 <h3>Displaying Completion vs. Timeline for: {item.name}</h3> 
+				 {#key item}
 					<SingleItemBarCompVersesDays {item} />
-				{/key} -->
-			</div>
+				{/key} 
+			</div> -->
 		</div>
 
 		<div class="item-completion-byPriority">
+			<HorizontalStackedBarChart />
 			<!-- <CompletionByItemPriority trackingItemList={page?.data?.trackingItems} /> -->
 		</div>
 
