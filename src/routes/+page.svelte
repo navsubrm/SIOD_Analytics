@@ -1,35 +1,32 @@
 <script lang="ts">
 	import '$lib/styles/form.css';
+	import { activeList as jiraTicketActiveList } from '$lib/Feature_JiraTickets/utils/stores/activeList.js';
 	//Section One
 	import DisplayFeatureTableButton from '$lib/Feature_Features/ui/DisplayTableButton.svelte';
 	import DisplayMilestoneTableButton from '$lib/Feature_Milestones/ui/DisplayMilestoneTableButton.svelte';
 	import DisplayJIRATableButton from '$lib/Feature_JiraTickets/ui/DisplayTableButton.svelte';
 
 	//Section two
-	import SingleItemBarCompVersesDays from '$lib/ChartsAndGraphs/ui/Combo_Bar_Line_SingleItemBarCompVersesDays.svelte';
+	import DaysToNextMilestone from '$lib/Feature_Analytics/ui/Value_DaysToNextMilestone.svelte';
+	import PieTicketsByStage from '$lib/Feature_Analytics/ui/Pie_TicketsByStage.svelte';
+
+	// import SingleItemBarCompVersesDays from '$lib/ChartsAndGraphs/ui/Combo_Bar_Line_SingleItemBarCompVersesDays.svelte';
 	import FormStyles from '$lib/components/FormStyles.svelte';
-	import PercentageOfItemsWAdjustedEnd from '$lib/ChartsAndGraphs/ui/Pie_PercentageOfItemsWAdjustedEnd.svelte';
-	import PercentageOfItemsOpen from '$lib/ChartsAndGraphs/ui/Pie_PercentageOfItemsOpen.svelte';
-	import OnTimeAheadBehind from '$lib/ChartsAndGraphs/ui/Pie_OnTimeAheadBehind.svelte';
-	import CompletionByItemPriority from '$lib/ChartsAndGraphs/ui/Bar_CompletionByItemPriority.svelte';
-	import AverageDelta from '$lib/ChartsAndGraphs/ui/Value_AverageDelta.svelte';
-	import DaysToNextMilestone from '$lib/ChartsAndGraphs/ui/Value_DaysToNextMilestone.svelte';
+	import type { JIRATicket } from '$lib/Feature_JiraTickets/types.js';
+	// import PercentageOfItemsWAdjustedEnd from '$lib/ChartsAndGraphs/ui/Pie_PercentageOfItemsWAdjustedEnd.svelte';
+	// import PercentageOfItemsOpen from '$lib/ChartsAndGraphs/ui/Pie_PercentageOfItemsOpen.svelte';
+	// import OnTimeAheadBehind from '$lib/ChartsAndGraphs/ui/Pie_OnTimeAheadBehind.svelte';
+	// import CompletionByItemPriority from '$lib/ChartsAndGraphs/ui/Bar_CompletionByItemPriority.svelte';
+	// import AverageDelta from '$lib/ChartsAndGraphs/ui/Value_AverageDelta.svelte';
+	// import { getDaysBetweenDates } from '$lib/ChartsAndGraphs/utils/getDaysBetweenDates.js';
 
-	// 	import type { JIRATicket } from '$lib/Feature_JiraTickets/types';
+	let { data } = $props();
 
-	// let item = $state(page?.data?.jiraTickets[0]);
+	$effect(() => {
+		if (data?.jiraTickets) jiraTicketActiveList.set(data.jiraTickets as JIRATicket[]);
+	});
 
-	// let items = page?.data?.jiraTickets.map((el: JIRATicket) => {
-	// 	return { value: el._id, label: el.name };
-	// });
-
-	// interface SelectEvent {
-	// 	detail: { value: any };
-	// }
-
-	// function selectItemToDisplay(e: SelectEvent) {
-	// 	item = page?.data?.jiraTickets.find((el: JIRATicket) => el?._id == e?.detail?.value);
-	// }
+	$inspect(data);
 </script>
 
 <svelte:head>
@@ -56,7 +53,7 @@
 		<div class="flex-row">
 			<div class="details milestone">
 				<h4>Next Milestone:</h4>
-				<!-- <DaysToNextMilestone nextEventData={page?.data?.nextEventData} /> -->
+				<DaysToNextMilestone milestones={data?.milestones} />
 			</div>
 			<div class="details delta-calc">
 				<h4>Average Delta:</h4>
@@ -96,7 +93,7 @@
 		</div>
 
 		<div class="percent-behind-on-ahead">
-			<!-- <OnTimeAheadBehind trackingItemList={page?.data?.trackingItems} /> -->
+			<PieTicketsByStage />
 		</div>
 	</div>
 </section>

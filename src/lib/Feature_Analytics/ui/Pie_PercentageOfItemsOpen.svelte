@@ -1,12 +1,12 @@
 <script lang="ts">
 	import BlankPieChart from './Pie_BlankChart.svelte';
+	import { activeList } from '$lib/Feature_JiraTickets/utils/stores/activeList';
 
-	let { trackingItemList } = $props();
-	let title = $state('Percentage Complete');
+	let title = $state('Tickets by Feature/Milestone');
 
-	let totalItems = trackingItemList.length;
+	let totalItems = activeList.length;
 
-	let open = trackingItemList.filter((el: TrackingItem) => {
+	let open = activeList.filter((el: TrackingItem) => {
 		if (!el?.estimates[0] || el?.estimates[0]?.completionPercentile < 100) return el;
 	}).length;
 

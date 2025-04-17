@@ -44,7 +44,7 @@
 			<th>Start Date</th>
 			<th>Planned Release</th>
 			<th>OPR</th>
-			<th>Milestones</th>
+			<th>Milestone</th>
 			<th colspan="2">Current Release</th>
 			<th class="center">Details</th>
 			<th class="center">Edit</th>

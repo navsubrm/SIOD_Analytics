@@ -1,9 +1,8 @@
 <script lang="ts">
 	import '@carbon/charts-svelte/styles.css';
+	import { activeList } from '$lib/Feature_JiraTickets/utils/stores/activeList';
 	import { BarChartGrouped } from '@carbon/charts-svelte';
 	import { getDaysBetweenDates } from '$lib/ChartsAndGraphs/utils/getDaysBetweenDates';
-
-	let { trackingItemList } = $props();
 
 	//Look at going back into this chart and adding scatter plot that records days until next due date.
 

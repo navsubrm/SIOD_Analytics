@@ -28,8 +28,8 @@ import type { JIRAForm } from '$lib/Feature_JiraTickets/types';
 
 export async function load() {
 	return {
-		jiraTickets: await getJiraTicketList(),
-		milestones: await getMilestoneList()
+		jiraTickets: (await getJiraTicketList()) || [],
+		milestones: (await getMilestoneList()) || []
 	};
 }
 
