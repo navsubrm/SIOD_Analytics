@@ -28,11 +28,11 @@
 	$effect(() => {
 		items = convertJiraListToSelectOptions($activeList);
 		data = handleDataConversion(displaySet);
-		if(displaySet.length == 0) {
-			options.data.loading = true;
-		} else {
-			options.data.loading = false;
-		}
+		// if(displaySet.length == 0) {
+		// 	options.data.loading = true;
+		// } else {
+		// 	options.data.loading = false;
+		// }
 	});
 
 	function selectItemToDisplay(e) {
