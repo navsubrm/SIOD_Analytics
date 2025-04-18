@@ -3,8 +3,7 @@
 	import { activeList as jiraTicketActiveList } from '$lib/Feature_JiraTickets/utils/stores/activeList';
 	import { activeList as milestoneActiveList } from '$lib/Feature_Milestones/utils/stores/milestoneActiveList';
 	import { activeList as featuresActiveList } from '$lib/Feature_Features/utils/stores/activeList';
-	import Select from 'svelte-select';
-	import FormStyles from '$lib/components/FormStyles.svelte';
+	import type { Feature } from '$lib/Feature_Features/types.js';
 	import type { JIRATicket } from '$lib/Feature_JiraTickets/types.js';
 
 	//Section One
@@ -13,10 +12,14 @@
 	import DisplayJIRATableButton from '$lib/Feature_JiraTickets/ui/DisplayTableButton.svelte';
 
 	//Section two
-	import DaysToNextMilestone from '$lib/Feature_Analytics/ui/Value_DaysToNextMilestone.svelte';
-	import PieTicketsByStage from '$lib/Feature_Analytics/ui/PieTicketsByStage/Pie_TicketsByStage.svelte';
+	import AverageDelta from '$lib/Feature_Analytics/ui/valueCalculations/ui/AverageDelta.svelte';
+	import DaysToNextMilestone from '$lib/Feature_Analytics/ui/valueCalculations/ui/DaysToNextMilestone.svelte';
+	import TicketsByStage from '$lib/Feature_Analytics/ui/pieCharts/ui/TicketsByStage.svelte';
 	import HorizontalStackedBarChart from '$lib/Feature_Analytics/ui/horizontalStackedBarChart/HorizontalStackedBarChart.svelte';
 	import ComboBarMilestoneVsTime from '$lib/Feature_Analytics/ui/ComboBarMilestoneVsTime/ComboBarMilestoneVsTime.svelte';
+	import PercentageOfItemsOpen from '$lib/Feature_Analytics/ui/pieCharts/ui/PercentageOfItemsOpen.svelte';
+	import PercentageOverdue from '$lib/Feature_Analytics/ui/pieCharts/ui/PercentageOverdue.svelte';
+	import DeltaMeter from '$lib/Feature_Analytics/ui/meterGuage/ui/DeltaMeter.svelte';
 
 	let { data } = $props();
 
@@ -49,13 +52,26 @@
 			<h3>EM&C Dashboard</h3>
 		</div>
 		<div class="flex-row">
+			<!-- <DeltaMeter /> -->
 			<div class="details milestone">
 				<h4>Next Milestone:</h4>
-				<DaysToNextMilestone milestones={$milestoneActiveList} />
+				<DaysToNextMilestone />
+			</div>
+			<div class="details milestone-count">
+				<h4># of Milestones:</h4>
+				<p>{$milestoneActiveList.length}</p>
+			</div>
+			<div class="details feature-count">
+				<h4># of Features:</h4>
+				<p>{$featuresActiveList.length}</p>
+			</div>
+			<div class="details ticket-count">
+				<h4># of Tickets:</h4>
+				<p>{$jiraTicketActiveList.length}</p>
 			</div>
 			<div class="details delta-calc">
 				<h4>Average Delta:</h4>
-				<!-- <p><AverageDelta trackingItemList={page?.data?.jiraTickets} /></p> -->
+				<p><AverageDelta /></p>
 			</div>
 			<!-- <button class="btn" onclick={returnHome}>Return Home</button> -->
 		</div>
@@ -64,37 +80,25 @@
 	<div class="grid-container">
 		<div class="time-completion-comparison">
 			<ComboBarMilestoneVsTime />
-			<!-- <FormStyles Children={TrackingItemSelect} />
-			{#snippet TrackingItemSelect()}
-				<div class="select-style">
-					<label for="select-tracking-item">Select Tracking Item to View: </label>
-					<Select items={jiraSelectItems} on:change={selectItemToDisplay} />
-				</div>
-			{/snippet}
-			<div class="horizontal-chart">
-				 <h3>Displaying Completion vs. Timeline for: {item.name}</h3> 
-				 {#key item}
-					<SingleItemBarCompVersesDays {item} />
-				{/key} 
-			</div> -->
 		</div>
 
 		<div class="item-completion-byPriority">
 			<HorizontalStackedBarChart />
 			<!-- <CompletionByItemPriority trackingItemList={page?.data?.trackingItems} /> -->
 		</div>
+		{#key $jiraTicketActiveList}
+			<div class="percent-revised-end">
+				<PercentageOverdue />
+			</div>
 
-		<div class="percent-revised-end">
-			<!-- <PercentageOfItemsWAdjustedEnd trackingItemList={page?.data?.trackingItems} /> -->
-		</div>
+			<div class="percent-items-open">
+				<PercentageOfItemsOpen />
+			</div>
 
-		<div class="percent-items-open">
-			<!-- <PercentageOfItemsOpen trackingItemList={page?.data?.trackingItems} /> -->
-		</div>
-
-		<div class="percent-behind-on-ahead">
-			<PieTicketsByStage />
-		</div>
+			<div class="percent-behind-on-ahead">
+				<TicketsByStage />
+			</div>
+		{/key}
 	</div>
 </section>
 
@@ -153,6 +157,18 @@
 		border-left: solid 3px var(--orange);
 	}
 
+	.milestone-count {
+		border-left: solid 3px var(--gold);
+	}
+
+	.feature-count {
+		border-left: solid 3px var(--white);
+	}
+
+	.ticket-count {
+		border-left: solid 3px #6929c4;
+	}
+
 	.delta-calc {
 		border-left: solid 3px var(--gold);
 	}
@@ -199,16 +215,17 @@
 		overflow-y: auto;
 	}
 
-	.time-completion-comparison h3 {
+	/* .time-completion-comparison h3 {
 		text-align: center;
-	}
+	} */
 
 	.percent-revised-end,
 	.percent-items-open,
 	.percent-behind-on-ahead {
-		height: min-content;
-		width: min-content;
-		max-width: 300px;
+		/* height: min-content;
+		width: min-content; */
+		width: 300px;
+		height: 350px;
 	}
 
 	.percent-revised-end {
@@ -223,16 +240,16 @@
 		grid-area: percentBehindOnAhead;
 	}
 
-	label,
+	/* label,
 	button {
 		color: var(--white);
-	}
+	} */
 
 	.grid-container {
 		position: relative;
 	}
 
-	button {
+	/* button {
 		padding-block: 1em;
 		padding-inline: 1.5em;
 		background: color-mix(in lab, var(--white), transparent 30%);
@@ -243,5 +260,5 @@
 
 	.select-style {
 		color: var(--white);
-	}
+	} */
 </style>

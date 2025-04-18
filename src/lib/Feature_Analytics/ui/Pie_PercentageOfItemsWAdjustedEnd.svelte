@@ -1,5 +1,5 @@
 <script lang="ts">
-	import BlankPieChart from './Pie_BlankChart.svelte';
+	import BlankPieChart from './pieCharts/ui/BlankChart.svelte';
 
 	let { trackingItemList } = $props();
 	let title = $state('On Time Failure Rate');

@@ -1,13 +1,18 @@
+interface SelectItem {
+	value: string;
+	label: string;
+}
+
 interface JIRATicket {
 	_id?: string;
 	name?: string; //Use JIRA Ticket ID
 	startDate?: Date;
-	feature?: string;
+	feature?: SelectItem;
 	plannedReleaseDate: Date;
 	opr?: string;
-	milestones?: string[];
+	milestones?: SelectItem;
 	details: string;
-	releaseStages?: ReleaseStage[];
+	releaseStages: ReleaseStage[];
 	createdAt?: Date;
 	updatedAt?: Date;
 	closed?: Date;
@@ -36,4 +41,4 @@ interface JIRAForm extends FormDataEntryValue {
 	releaseStages: ReleaseStage[];
 }
 
-export type { JIRATicketValidations, JIRATicket, JIRAForm };
+export type { SelectItem, JIRATicketValidations, JIRATicket, JIRAForm };

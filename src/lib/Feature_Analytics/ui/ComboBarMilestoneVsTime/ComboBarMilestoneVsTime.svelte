@@ -7,41 +7,12 @@
 	import { activeList } from '$lib/Feature_JiraTickets/utils/stores/activeList';
 	import { LineChart } from '@carbon/charts-svelte';
 	import type { JIRATicket } from '$lib/Feature_JiraTickets/types';
-	import { getDaysBetweenDates } from '$lib/Feature_Analytics/utils/getDaysBetweenDates';
-	//import { afterNavigate } from '$app/navigation';
-	//import { onMount } from 'svelte';
+	import { handleDataConversion } from './utils/handleDataConversion';
+	import { convertJiraListToSelectOptions } from './utils/convertJiraListToSelectOptions';
 
 	interface SelectItem {
 		label: string;
 		value: string;
-	}
-
-	let items = $state(convertJiraListToSelectOptions()) as SelectItem[];
-	let displaySet = $state([]) as JIRATicket[];
-	let data = $state(handleDataConversion($activeList)) as graphElement[];
-
-	$effect(() => {
-		items = convertJiraListToSelectOptions();
-	});
-
-	function convertJiraListToSelectOptions(): SelectItem[] {
-		return $activeList.map((el) => {
-			return {
-				value: el._id as string,
-				label: `${el?.feature?.label} ${el.name}: ${el?.milestones?.label}`
-			};
-		});
-	}
-
-	function selectItemToDisplay(e) {
-		displaySet = $activeList.filter((el) => {
-			if (e.detail.some((option: JIRATicket) => el._id == option.value)) return el;
-		});
-		data = handleDataConversion(displaySet);
-	}
-
-	function clearSelect() {
-		displaySet = [];
 	}
 
 	interface graphElement {
@@ -50,32 +21,25 @@
 		value: number;
 	}
 
-	function handleDataConversion(displaySet: JIRATicket[]) {
-		return displaySet
-			.map((ticket) => {
-				const totalDays = getDaysBetweenDates(
-					ticket?.plannedReleaseDate,
-					ticket?.startDate as date
-				);
-				const ticketArray = handleTicketDataConversion(ticket, totalDays);
-				return [...ticketArray];
-			})
-			.flat();
+	let items = $state(convertJiraListToSelectOptions($activeList)) as SelectItem[];
+	let displaySet = $state([]) as JIRATicket[];
+	let data = $state(handleDataConversion($activeList)) as graphElement[];
+
+	$effect(() => {
+		items = convertJiraListToSelectOptions($activeList);
+		data = handleDataConversion(displaySet);
+		//options.data.loading = false;
+	});
+
+	function selectItemToDisplay(e) {
+		displaySet = $activeList.filter((el) => {
+			if (e.detail.some((option: SelectItem) => el._id == option.value)) return el;
+		});
+		data = handleDataConversion(displaySet);
 	}
 
-	function handleTicketDataConversion(ticket: JIRATIcket, totalDays) {
-		const ticketData = ticket.releaseStages.map((stage) => {
-			const stageDays = !stage.date ? 0 : getDaysBetweenDates(ticket.startDate, stage.date);
-			const actualPercentile = stageDays == 0 ? 0 : totalDays / stageDays;
-			const projectedPercentile = projectionEstimates.find((el) => el.stage == stage.stage);
-
-			return {
-				group: `${ticket.feature.label}: ${ticket.name}`,
-				key: stage.stage,
-				value: !projectedPercentile ? 0 : projectedPercentile.projectedTime - actualPercentile
-			};
-		});
-		return ticketData;
+	function clearSelect() {
+		displaySet = [];
 	}
 </script>
 
@@ -95,8 +59,8 @@
 
 {#key displaySet}
 	<div class="horizontal-chart">
-		<h3>Displaying Milestone vs. Timeline for:</h3>
-		<small>Estimates based on: </small>
+		<h3>Displaying Actual Vs. Projection Completion By Milestone:</h3>
+		<small>Milestone Projections: </small>
 		{#each projectionEstimates as stage}
 			<small>{stage?.stage}: {stage?.projectedTime * 100}%</small>
 		{/each}
@@ -110,9 +74,11 @@
 			{/each})
 		{/if} -->
 
-		{#key data}
-			<LineChart {data} {options} />
-		{/key}
+		<div class="chart-box">
+			{#key data}
+				<LineChart {data} {options} />
+			{/key}
+		</div>
 	</div>
 {/key}
 
@@ -125,5 +91,9 @@
 
 	small:last-of-type {
 		margin-right: 0ch;
+	}
+
+	.chart-box {
+		margin-top: 15px;
 	}
 </style>

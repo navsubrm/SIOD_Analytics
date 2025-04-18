@@ -4,7 +4,26 @@ div :global(.cds--chart-holder .chart-grid-backdrop) {
 }
 
 div :global(*) {
-	--cds-text-primary: white;
-	--cds-text-secondary: white;
-	--cds-layer-02: white;
+	--cds-text-primary: var(--white);
+	--cds-text-secondary: var(--white);
+	--cds-layer-02: var(--white);
 }
+
+span :global(.cds--cc--tooltip .content-box),
+span :global(.datapoint-tooltip) {
+	--cds-text-primary: var(--white);
+	--cds-text-secondary: var(--white);
+	color: var(--white);
+	padding: 0.5em;
+}
+
+span :global(.cds--cc--tooltip) {
+	--cds-layer-02: var(--blue);
+	border: solid 1px var(--white);
+	border-radius: 0.5em;
+}
+/* 
+span :global(> *) {
+	--cds-text-primary: var(--white);
+	--cds-text-secondary: var(--white);
+} */
