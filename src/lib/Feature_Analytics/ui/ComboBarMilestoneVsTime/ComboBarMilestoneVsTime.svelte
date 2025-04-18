@@ -24,6 +24,7 @@
 	let items = $state(convertJiraListToSelectOptions($activeList)) as SelectItem[];
 	let displaySet = $state([]) as JIRATicket[];
 	let data = $state(handleDataConversion($activeList)) as graphElement[];
+	let open = $state(false);
 
 	$effect(() => {
 		items = convertJiraListToSelectOptions($activeList);
@@ -58,6 +59,7 @@
 			on:clear={clearSelect}
 			closeListOnChange={false}
 			--list-z-index="100000"
+			bind:listOpen={open}
 		/>
 	</div>
 {/snippet}
@@ -79,7 +81,7 @@
 			{/each})
 		{/if} -->
 
-		<div class="chart-box">
+		<div class="chart-box" class:select-open={open}>
 			{#key data}
 				<LineChart {data} {options} />
 			{/key}
@@ -100,6 +102,11 @@
 
 	.chart-box {
 		margin-top: 15px;
+	}
+
+	.select-open {
+		pointer-events: none;
+		visibility: hidden;
 	}
 
 	.select-style {
