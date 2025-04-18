@@ -57,6 +57,7 @@
 			on:change={selectItemToDisplay}
 			on:clear={clearSelect}
 			closeListOnChange={false}
+			--list-z-index="100000"
 		/>
 	</div>
 {/snippet}
